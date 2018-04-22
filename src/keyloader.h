@@ -48,6 +48,7 @@ public:
     Q_INVOKABLE int vkbColumns() { return iVkbColumns; }
     Q_INVOKABLE QVariantList keyAt(int row, int col);
     Q_INVOKABLE const QStringList availableLayouts();
+    Q_INVOKABLE const QStringList availableColorSchemes();
 
 signals:
 

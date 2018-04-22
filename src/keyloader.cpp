@@ -200,6 +200,24 @@ const QStringList KeyLoader::availableLayouts()
     return ret;
 }
 
+const QStringList KeyLoader::availableColorSchemes()
+{
+    if (!iUtil)
+        return QStringList();
+
+    QDir confDir(iUtil->configPath());
+    QStringList filter("*.colors");
+
+    QStringList results = confDir.entryList(filter, QDir::Files|QDir::Readable, QDir::Name);
+
+    QStringList ret;
+    foreach(QString s, results) {
+        ret << s.left(s.lastIndexOf('.'));
+    }
+
+    return ret;
+}
+
 void KeyLoader::cleanUpKey(KeyData &key)
 {
     // make sure that a key does not try to use some (currently) unsupported feature...

@@ -18,6 +18,11 @@ Page {
         id: urlWindow
         property variant urls: term.grabURLsFromBuffer()
     }
+    Item {
+        id: colorsWindow
+        property variant schemes: keyLoader.availableColorSchemes()
+        property string currentScheme: util.settingsValue("ui/colorScheme");
+    }
     function applyCharset(charsetName) {
         util.setSettingsValue("terminal/charset", charsetName);
         ptyiface.changeCharset(charsetName);
@@ -293,6 +298,7 @@ Page {
                             }
                         }
                         value: util.settingsValue("terminal/charset")
+                        enabled: section4.expanded
                     }
                     TextField {
                         id: charsetField
@@ -308,7 +314,52 @@ Page {
                             visible = false;
                             charsetFieldCombo.visible = true;
                         }
+                        enabled: section4.expanded
                     }
+                    TextSwitch {
+                        enabled: section4.expanded
+                        checked: !util.settingsValueBool("ui/showBackground")
+                        width: parent.width
+                        text: qsTr("Transparent background")
+                        onCheckedChanged: {
+                            util.setSettingsValue("ui/showBackground", !checked);
+                            pageStack.previousPage().bgDrawItem.visible = util.settingsValueBool("ui/showBackground");
+                        }
+                    }
+                }
+            }
+            ExpandingSection {
+                id: section5
+                buttonHeight: Theme.iconSizeLarge
+                title: qsTr("Color scheme")
+                expanded: pageStack.previousPage() ? pageStack.previousPage().settingsColorsOpened : false
+                onExpandedChanged: { pageStack.previousPage().settingsColorsOpened = expanded; }
+                Component {
+                    id: listDelegate3
+                    ListItem {
+                        enabled: section5.expanded
+                        highlighted: colorsWindow.currentScheme === modelData
+                        Label {
+                            text: modelData
+                            color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
+                            x: Theme.paddingLarge
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                        onClicked: {
+                            colorsWindow.currentScheme = modelData;
+                            util.setSettingsValue("ui/colorScheme", modelData);
+                            pageStack.previousPage().textRenderItem.loadColorScheme(modelData);
+                            pageStack.previousPage().bgDrawItem.color = "#" + pageStack.previousPage().textRenderItem.getBgColor();
+                            section5.expanded = false;
+                        }
+                    }
+                }
+                content.sourceComponent: ListView {
+                    height: contentHeight
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    delegate: listDelegate3
+                    model: colorsWindow.schemes
                 }
             }
         }

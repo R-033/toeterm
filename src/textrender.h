@@ -61,6 +61,11 @@ public:
     Q_INVOKABLE QPoint cursorPixelPos();
     Q_INVOKABLE QSize cursorPixelSize();
 
+    QColor qColorFromHex(QString hex);
+    void updatePalette();
+    Q_INVOKABLE void loadColorScheme(QString layoutName);
+    Q_INVOKABLE QString getBgColor();
+
 signals:
     void myWidthChanged(int newWidth);
     void myHeightChanged(int newHeight);
@@ -92,6 +97,8 @@ private:
     Util *iUtil;
 
     QList<QColor> iColorTable;
+
+    QSettings *colorScheme;
 };
 
 #endif // TEXTRENDER_H

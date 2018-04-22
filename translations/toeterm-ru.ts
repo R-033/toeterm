@@ -32,7 +32,7 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/MainPage.qml" line="236"/>
+        <location filename="../qml/MainPage.qml" line="254"/>
         <source>An error occurred</source>
         <translation>Произошла ошибка</translation>
     </message>
@@ -40,124 +40,134 @@
 <context>
     <name>SettingsMenu</name>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="31"/>
+        <location filename="../qml/SettingsMenu.qml" line="36"/>
         <source>About</source>
-        <translation type="unfinished">О программе</translation>
+        <translation>О программе</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="35"/>
+        <location filename="../qml/SettingsMenu.qml" line="40"/>
         <source>New window</source>
-        <translation type="unfinished"></translation>
+        <translation>Новое окно</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="57"/>
-        <location filename="../qml/SettingsMenu.qml" line="137"/>
+        <location filename="../qml/SettingsMenu.qml" line="62"/>
+        <location filename="../qml/SettingsMenu.qml" line="142"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="67"/>
+        <location filename="../qml/SettingsMenu.qml" line="72"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="80"/>
+        <location filename="../qml/SettingsMenu.qml" line="85"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Действия</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="118"/>
+        <location filename="../qml/SettingsMenu.qml" line="123"/>
         <source>URL grabber</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбор ссылок</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="133"/>
+        <location filename="../qml/SettingsMenu.qml" line="138"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="157"/>
+        <location filename="../qml/SettingsMenu.qml" line="162"/>
         <source>Keyboard layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Раскладка клавиатуры</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="191"/>
+        <location filename="../qml/SettingsMenu.qml" line="196"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="198"/>
+        <location filename="../qml/SettingsMenu.qml" line="203"/>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер шрифта</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="217"/>
+        <location filename="../qml/SettingsMenu.qml" line="222"/>
         <source>Drag mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим нажатий</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="223"/>
+        <location filename="../qml/SettingsMenu.qml" line="228"/>
         <source>Gestures</source>
-        <translation type="unfinished"></translation>
+        <translation>Жесты</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="223"/>
+        <location filename="../qml/SettingsMenu.qml" line="228"/>
         <source>Scroll</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутка</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="223"/>
+        <location filename="../qml/SettingsMenu.qml" line="228"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Выделение</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="232"/>
+        <location filename="../qml/SettingsMenu.qml" line="237"/>
         <source>Keyboard behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>Поведение клавиатуры</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="238"/>
+        <location filename="../qml/SettingsMenu.qml" line="243"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Выкл</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="238"/>
+        <location filename="../qml/SettingsMenu.qml" line="243"/>
         <source>Fade</source>
-        <translation type="unfinished"></translation>
+        <translation>Таяние</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="238"/>
+        <location filename="../qml/SettingsMenu.qml" line="243"/>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Сдвиг</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="248"/>
+        <location filename="../qml/SettingsMenu.qml" line="253"/>
         <source>Keyboard delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Задержка клавиатуры</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="252"/>
+        <location filename="../qml/SettingsMenu.qml" line="257"/>
         <source>No delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Без задержки</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="268"/>
+        <location filename="../qml/SettingsMenu.qml" line="273"/>
         <source>Keyboard feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрация клавиатуры</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="274"/>
+        <location filename="../qml/SettingsMenu.qml" line="279"/>
         <source>Charset</source>
-        <translation type="unfinished">Кодировка</translation>
+        <translation>Кодировка</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="301"/>
+        <location filename="../qml/SettingsMenu.qml" line="307"/>
         <source>Apply with Enter key</source>
+        <translation>Нажмите Enter чтобы применить изменения</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsMenu.qml" line="308"/>
+        <source>Custom charset</source>
+        <translation>Другая кодировка</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsMenu.qml" line="323"/>
+        <source>Transparent background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="302"/>
-        <source>Custom charset</source>
+        <location filename="../qml/SettingsMenu.qml" line="334"/>
+        <source>Color scheme</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

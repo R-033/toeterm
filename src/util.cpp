@@ -136,7 +136,7 @@ void Util::setSettingsValue(QString key, QVariant value)
 
 QString Util::versionString()
 {
-    return "1.1";
+    return "1.2";
 }
 
 int Util::uiFontSize()

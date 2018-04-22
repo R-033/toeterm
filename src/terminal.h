@@ -103,8 +103,8 @@ public:
 
     TermChar zeroChar;
 
-    static const int defaultFgColor = 7;
-    static const int defaultBgColor = 0;
+    int defaultFgColor = 257;
+    int defaultBgColor = 256;
 
 signals:
     void cursorPosChanged(QPoint newPos);

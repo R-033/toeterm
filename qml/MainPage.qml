@@ -13,7 +13,9 @@ Page {
     property bool settingsActionsOpened: false
     property bool settingsUrlsOpened: false
     property bool settingsLayoutsOpened: false
+    property bool settingsColorsOpened: false
     property bool settingsSettingsOpened: false
+    property Item bgDrawItem: bgDraw
     Rectangle {
         property int fontSize: 14*pixelRatio
 
@@ -53,6 +55,23 @@ Page {
         color: "transparent"
 
         property string hcolor: Theme.highlightColor
+
+        Rectangle {
+            id: bgDraw
+            anchors.fill: textrender
+            visible: false
+        }
+
+        Timer {
+            id: bgColorTimer
+            running: true
+            repeat: false
+            interval: 50
+            onTriggered: {
+                bgDraw.color = "#" + textrender.getBgColor();
+                bgDraw.visible = util.settingsValueBool("ui/showBackground");
+            }
+        }
 
         Image {
             // terminal buffer scroll indicator
@@ -228,7 +247,7 @@ Page {
         }
 
         Component.onCompleted: {
-            util.updateSwipeLock(vkb.active)
+            util.updateSwipeLock(vkb.active);
         }
 
         Notification {

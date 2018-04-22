@@ -1,10 +1,13 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml/Main.qml</file>
+        <file>qml/AboutPage.qml</file>
         <file>qml/Cover.qml</file>
         <file>qml/Key.qml</file>
         <file>qml/Keyboard.qml</file>
         <file>qml/Lineview.qml</file>
+        <file>qml/Main.qml</file>
+        <file>qml/MainPage.qml</file>
+        <file>qml/SettingsMenu.qml</file>
         <file>icons/backspace.png</file>
         <file>icons/down.png</file>
         <file>icons/enter.png</file>
@@ -14,30 +17,16 @@
         <file>icons/shift.png</file>
         <file>icons/tab.png</file>
         <file>icons/up.png</file>
-        <file>data/menu.xml</file>
         <file>data/english.layout</file>
+        <file>data/Default.colors</file>
         <file>data/finnish.layout</file>
         <file>data/french.layout</file>
         <file>data/german.layout</file>
+        <file>data/menu.xml</file>
         <file>data/qwertz.layout</file>
-        <file>qml/AboutPage.qml</file>
-        <file>qml/MainPage.qml</file>
-        <file>qml/SettingsMenu.qml</file>
         <file>data/russian.layout</file>
-        <file>src/keyloader.cpp</file>
-        <file>src/keyloader.h</file>
-        <file>src/main.cpp</file>
-        <file>src/mainwindow.cpp</file>
-        <file>src/mainwindow.h</file>
-        <file>src/ptyiface.cpp</file>
-        <file>src/ptyiface.h</file>
-        <file>src/terminal.cpp</file>
-        <file>src/terminal.h</file>
-        <file>src/textrender.cpp</file>
-        <file>src/textrender.h</file>
-        <file>src/util.cpp</file>
-        <file>src/util.h</file>
-        <file>translations/toeterm-ru.ts</file>
-        <file>translations/toeterm.ts</file>
+        <file>data/Solarized_Dark_Alternative.colors</file>
+        <file>data/Solarized_Dark.colors</file>
+        <file>data/Solarized_Light.colors</file>
     </qresource>
 </RCC>

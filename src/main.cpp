@@ -117,10 +117,15 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     // copy the default config files to the config dir if they don't already exist
     copyFileFromResources(":/data/menu.xml", util.configPath()+"/menu.xml");
     copyFileFromResources(":/data/english.layout", util.configPath()+"/english.layout");
+    copyFileFromResources(":/data/russian.layout", util.configPath()+"/russian.layout");
     copyFileFromResources(":/data/finnish.layout", util.configPath()+"/finnish.layout");
     copyFileFromResources(":/data/french.layout", util.configPath()+"/french.layout");
     copyFileFromResources(":/data/german.layout", util.configPath()+"/german.layout");
     copyFileFromResources(":/data/qwertz.layout", util.configPath()+"/qwertz.layout");
+    copyFileFromResources(":/data/Default.colors", util.configPath()+"/Default.colors");
+    copyFileFromResources(":/data/Solarized_Dark.colors", util.configPath()+"/Solarized_Dark.colors");
+    copyFileFromResources(":/data/Solarized_Dark_Alternative.colors", util.configPath()+"/Solarized_Dark_Alternative.colors");
+    copyFileFromResources(":/data/Solarized_Light.colors", util.configPath()+"/Solarized_Light.colors");
 
     KeyLoader keyLoader;
     keyLoader.setUtil(&util);
@@ -158,6 +163,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     util.setWindow(&view);
     util.setTerm(&term);
     util.setRenderer(tr);
+
+    tr->loadColorScheme(settings->value("ui/colorScheme").toString());
 
     QObject::connect(&term,SIGNAL(displayBufferChanged()),win,SLOT(displayBufferChanged()));
     QObject::connect(view.engine(),SIGNAL(quit()),&app,SLOT(quit()));
@@ -205,6 +212,10 @@ void defaultSettings(QSettings* settings)
         settings->setValue("ui/fontSize", 11);
     if(!settings->contains("ui/maxFontSize"))
         settings->setValue("ui/maxFontSize", 35);
+    if(!settings->contains("ui/showBackground"))
+        settings->setValue("ui/showBackground", false);
+    if(!settings->contains("ui/colorScheme"))
+        settings->setValue("ui/colorScheme", "Default");
     if(!settings->contains("ui/allowSwipe"))
         settings->setValue("ui/allowSwipe", "auto");   // "true", "false", "auto"
     if(!settings->contains("ui/keyboardFadeOutDelay"))

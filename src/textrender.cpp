@@ -22,43 +22,88 @@
 #include "terminal.h"
 #include "util.h"
 
+#include <QDebug>
+
 TextRender::TextRender(QQuickItem *parent) :
     QQuickPaintedItem(parent),
     iTerm(0),
     iUtil(0)
 {
     setFlag(ItemHasContents);
-
     connect(this,SIGNAL(myWidthChanged(int)),this,SLOT(updateTermSize()));
     connect(this,SIGNAL(myHeightChanged(int)),this,SLOT(updateTermSize()));
     connect(this,SIGNAL(fontSizeChanged()),this,SLOT(updateTermSize()));
+    iShowBufferScrollIndicator = false;
+}
 
+void TextRender::loadColorScheme(QString layoutName) {
+    colorScheme = new QSettings(QDir::homePath()+"/.config/ToeTerm/" + layoutName + ".colors", QSettings::IniFormat);
+    if(!colorScheme->contains("colors/bgColor"))
+        colorScheme->setValue("colors/bgColor", "000000");
+    if(!colorScheme->contains("colors/bdColor"))
+        colorScheme->setValue("colors/bdColor", "FFFFFF");
+    if(!colorScheme->contains("colors/fgColor"))
+        colorScheme->setValue("colors/fgColor", "D2D2D2");
+    if(!colorScheme->contains("paletteNormal/black"))
+        colorScheme->setValue("paletteNormal/black", "000000");
+    if(!colorScheme->contains("paletteNormal/red"))
+        colorScheme->setValue("paletteNormal/red", "D20000");
+    if(!colorScheme->contains("paletteNormal/green"))
+        colorScheme->setValue("paletteNormal/green", "00D200");
+    if(!colorScheme->contains("paletteNormal/yellow"))
+        colorScheme->setValue("paletteNormal/yellow", "D2D200");
+    if(!colorScheme->contains("paletteNormal/blue"))
+        colorScheme->setValue("paletteNormal/blue", "0000D2");
+    if(!colorScheme->contains("paletteNormal/magenta"))
+        colorScheme->setValue("paletteNormal/magenta", "D200D2");
+    if(!colorScheme->contains("paletteNormal/cyan"))
+        colorScheme->setValue("paletteNormal/cyan", "00D2D2");
+    if(!colorScheme->contains("paletteNormal/white"))
+        colorScheme->setValue("paletteNormal/white", "D2D2D2");
+    if(!colorScheme->contains("paletteBright/black"))
+        colorScheme->setValue("paletteBright/black", "808080");
+    if(!colorScheme->contains("paletteBright/red"))
+        colorScheme->setValue("paletteBright/red", "FF0000");
+    if(!colorScheme->contains("paletteBright/green"))
+        colorScheme->setValue("paletteBright/green", "00FF00");
+    if(!colorScheme->contains("paletteBright/yellow"))
+        colorScheme->setValue("paletteBright/yellow", "FFFF00");
+    if(!colorScheme->contains("paletteBright/blue"))
+        colorScheme->setValue("paletteBright/blue", "0000FF");
+    if(!colorScheme->contains("paletteBright/magenta"))
+        colorScheme->setValue("paletteBright/magenta", "FF00FF");
+    if(!colorScheme->contains("paletteBright/cyan"))
+        colorScheme->setValue("paletteBright/cyan", "00FFFF");
+    if(!colorScheme->contains("paletteBright/white"))
+        colorScheme->setValue("paletteBright/white", "FFFFFF");
+    updatePalette();
+}
+
+void TextRender::updatePalette() {
+    iColorTable.clear();
     //normal
-    iColorTable.append(QColor(0, 0, 0));
-    iColorTable.append(QColor(210, 0, 0));
-    iColorTable.append(QColor(0, 210, 0));
-    iColorTable.append(QColor(210, 210, 0));
-    iColorTable.append(QColor(0, 0, 240));
-    iColorTable.append(QColor(210, 0, 210));
-    iColorTable.append(QColor(0, 210, 210));
-    iColorTable.append(QColor(235, 235, 235));
-
+    iColorTable.append(qColorFromHex("paletteNormal/black"));
+    iColorTable.append(qColorFromHex("paletteNormal/red"));
+    iColorTable.append(qColorFromHex("paletteNormal/green"));
+    iColorTable.append(qColorFromHex("paletteNormal/yellow"));
+    iColorTable.append(qColorFromHex("paletteNormal/blue"));
+    iColorTable.append(qColorFromHex("paletteNormal/magenta"));
+    iColorTable.append(qColorFromHex("paletteNormal/cyan"));
+    iColorTable.append(qColorFromHex("paletteNormal/white"));
     //bright
-    iColorTable.append(QColor(127, 127, 127));
-    iColorTable.append(QColor(255, 0, 0));
-    iColorTable.append(QColor(0, 255, 0));
-    iColorTable.append(QColor(255, 255, 0));
-    iColorTable.append(QColor(92, 92, 255));
-    iColorTable.append(QColor(255, 0, 255));
-    iColorTable.append(QColor(0, 255, 255));
-    iColorTable.append(QColor(255, 255, 255));
-
+    iColorTable.append(qColorFromHex("paletteBright/black"));
+    iColorTable.append(qColorFromHex("paletteBright/red"));
+    iColorTable.append(qColorFromHex("paletteBright/green"));
+    iColorTable.append(qColorFromHex("paletteBright/yellow"));
+    iColorTable.append(qColorFromHex("paletteBright/blue"));
+    iColorTable.append(qColorFromHex("paletteBright/magenta"));
+    iColorTable.append(qColorFromHex("paletteBright/cyan"));
+    iColorTable.append(qColorFromHex("paletteBright/white"));
     //colour cube
     for (int r = 0x00; r < 0x100; r += 0x33)
         for (int g = 0x00; g < 0x100; g += 0x33)
             for (int b = 0x00; b < 0x100; b += 0x33)
                 iColorTable.append(QColor(r, g, b));
-
     //greyscale ramp
     int ramp[] = {
           0,  11,  22,  33,  44,  55,  66,  77,  88,  99, 110, 121,
@@ -66,11 +111,21 @@ TextRender::TextRender(QQuickItem *parent) :
     };
     for (int i = 0; i < 24; i++)
         iColorTable.append(QColor(ramp[i], ramp[i], ramp[i]));
-
-    if(iColorTable.size() != 256)
+    iColorTable.append(qColorFromHex("colors/bgColor"));
+    iColorTable.append(qColorFromHex("colors/fgColor"));
+    if(iColorTable.size() != 256+2)
         qFatal("invalid color table");
+}
 
-    iShowBufferScrollIndicator = false;
+QString TextRender::getBgColor() {
+    return colorScheme->value("colors/bgColor").toString();
+}
+
+QColor TextRender::qColorFromHex(QString hex) {
+    int r, g, b;
+    char *sthex = colorScheme->value(hex).toString().toUtf8().data();
+    sscanf(sthex, "%02x%02x%02x", &r, &g, &b);
+    return QColor(r, g, b);
 }
 
 TextRender::~TextRender()
@@ -111,7 +166,7 @@ void TextRender::paint(QPainter* painter)
         QPoint cursor = cursorPixelPos();
         QSize csize = cursorPixelSize();
         painter->setPen(Qt::transparent);
-        painter->setBrush(iColorTable[Terminal::defaultFgColor]);
+        painter->setBrush(iColorTable[iTerm->defaultFgColor]);
         painter->drawRect(cursor.x(), cursor.y(), csize.width(), csize.height());
     }
 
@@ -234,7 +289,7 @@ void TextRender::drawBgFragment(QPainter* painter, float x, float y, float width
         bg = c;
     }
 
-    if (bg == Terminal::defaultBgColor)
+    if (bg == iTerm->defaultBgColor)
         return;
 
     painter->setPen(Qt::transparent);

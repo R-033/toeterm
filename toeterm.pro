@@ -6,9 +6,7 @@ LIBS += -lutil
 system($$PWD/updateversion.sh)
 
 QT += feedback
-DEFINES += HAVE_FEEDBACK
 
-# Input
 HEADERS += \
     src/ptyiface.h \
     src/terminal.h \
@@ -26,37 +24,29 @@ SOURCES += \
     src/keyloader.cpp \
     src/mainwindow.cpp
 
-OTHER_FILES += \
-    qml/Main.qml \
-    qml/MainPage.qml \
-    qml/AboutPage.qml \
-    qml/SettingsMenu.qml \
-    qml/Cover.qml \
-    qml/Keyboard.qml \
-    qml/Key.qml \
-    qml/Lineview.qml
+OTHER_FILES += qml/*
 
 RESOURCES += \
     resources.qrc
 
-unix:!symbian:!maemo5 {
-    target.path = /usr/bin
-    INSTALLS += target
-}
+target.path = /usr/bin
+INSTALLS += target
 
-maemo5 {
-    target.path = /usr/bin
-    INSTALLS += target
-}
+SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
 CONFIG += sailfishapp_i18n
 
 TRANSLATIONS += translations/toeterm-ru.ts
+TRANSLATIONS += translations/toeterm-nl.ts
+
+update_qml.target = qml.qrc
+update_qml.commands = echo>>$${update_qml.target}
+update_qml.depends = $$files(path/to/resource/files/*, true)
+QMAKE_EXTRA_TARGETS += update_qml
+PRE_TARGETDEPS += $${update_qml.target}
 
 DISTFILES += \
-    translations/*.ts \
+    translations/toeterm-nl.ts \
+    translations/toeterm-ru.ts \
     rpm/toeterm.yaml \
     rpm/toeterm.spec
-
-SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
-
