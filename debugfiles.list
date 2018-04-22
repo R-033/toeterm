@@ -2,7 +2,7 @@
 %dir /usr/lib/debug/usr
 %dir /usr/lib/debug/usr/bin
 %dir /usr/lib/debug/.build-id
-%dir /usr/lib/debug/.build-id/48
+%dir /usr/lib/debug/.build-id/60
 /usr/lib/debug/usr/bin/toeterm.debug
-/usr/lib/debug/.build-id/48/297e51cd68daaeb3da141af4d826823b831f25.debug
-/usr/lib/debug/.build-id/48/297e51cd68daaeb3da141af4d826823b831f25
+/usr/lib/debug/.build-id/60/79baabd9cd8a580c00261d1fd2ab5d8e9f1b95.debug
+/usr/lib/debug/.build-id/60/79baabd9cd8a580c00261d1fd2ab5d8e9f1b95

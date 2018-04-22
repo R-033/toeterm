@@ -32,7 +32,7 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/MainPage.qml" line="254"/>
+        <location filename="../qml/MainPage.qml" line="255"/>
         <source>An error occurred</source>
         <translation type="unfinished"></translation>
     </message>

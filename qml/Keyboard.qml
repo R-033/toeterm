@@ -123,7 +123,7 @@ Rectangle {
     {
         var ret = keyLoader.loadLayout(util.settingsValue("ui/keyboardLayout"));
         if (!ret) {
-            showErrorMessage("There was an error loading the keyboard layout.<br>\nUsing the default one instead.");
+            window.showErrorMessage("There was an error loading the keyboard layout. Using the default one instead.");
             util.setSettingsValue("ui/keyboardLayout", "english");
             ret = keyLoader.loadLayout(":/data/english.layout"); //try the default as a fallback (load from resources to ensure it will succeed)
             if (!ret) {
