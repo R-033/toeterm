@@ -31,9 +31,8 @@ Rectangle {
     property bool sticky: false     // can key be stickied?
     property bool becomesSticky: false // will this become sticky after release?
     property int stickiness: 0      // current stickiness status
-    property real labelOpacity: keyboard.active ? 1.0 : 0.2
-
-    property string backgroundColorActive: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity * 0.5)
+    property bool passiveKey: keyboard.isPassiveKey(code)
+    property real labelOpacity: keyboard.active ? 1.0 : key.passiveKey ? 0.5 : 0.2
 
     // mouse input handling
     property int clickThreshold: 20
@@ -46,8 +45,8 @@ Rectangle {
 
     Rectangle {
         anchors.fill: parent
-        color: label=="" ? "transparent" : backgroundColorActive
-        opacity: keyboard.active ? 1.0 : 0
+        color: label=="" ? "transparent" : keyboard.backgroundColorActive
+        opacity: keyboard.active ? 1.0 : key.passiveKey ? 0.5 : 0
         Behavior on opacity {
             FadeAnimation {}
         }
@@ -152,7 +151,8 @@ Rectangle {
         var Key_Down = 0x01000015;
         var Key_PageUp = 0x01000016;
         var Key_PageDown = 0x01000017;
-        var Key_Space = 0x20;
+        // Space key is used to switch languages
+//      var Key_Space = 0x20;
         var Key_Backspace = 0x01000003;
         var Key_Return = 0x01000004;
         var Key_Delete = 0x01000007;
@@ -163,7 +163,7 @@ Rectangle {
                 code === Key_Down ||
                 code === Key_PageUp ||
                 code === Key_PageDown ||
-                code === Key_Space ||
+//              code === Key_Space ||
                 code === Key_Backspace ||
                 code === Key_Return ||
                 code === Key_Delete
@@ -215,7 +215,7 @@ Rectangle {
         return true;
     }
 
-    function handleRelease(touchArea, x, y) {
+    function handleRelease(touchArea, x, y, passKey) {
         keyRepeatStarter.stop();
         keyRepeatTimer.stop();
         highlightedBackground.visible = false;
@@ -233,11 +233,11 @@ Rectangle {
                 setStickiness(-1);
             }
 
-            window.vkbKeypress(currentCode, keyboard.keyModifiers);
+            if (!passKey) window.vkbKeypress(currentCode, keyboard.keyModifiers);
 
             // first non-sticky press will cause the sticky to be released
             if( !sticky && keyboard.resetSticky != 0 && keyboard.resetSticky !== key ) {
-                resetSticky.setStickiness(0);
+                setStickiness(0);
             }
         }
         else {
@@ -276,7 +276,9 @@ Rectangle {
     {
         if(sticky) {
             if( keyboard.resetSticky != 0 && keyboard.resetSticky !== key ) {
-                resetSticky.setStickiness(0)
+                stickiness = 0;
+                keyboard.resetSticky = 0;
+                return;
             }
 
             if(val===-1)

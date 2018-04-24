@@ -200,7 +200,7 @@ void defaultSettings(QSettings* settings)
         settings->setValue("gen/grabUrlsFromBackbuffer", false);
 
     if(!settings->contains("terminal/envVarTERM"))
-        settings->setValue("terminal/envVarTERM", "xterm");
+        settings->setValue("terminal/envVarTERM", "xterm-256color");
     if(!settings->contains("terminal/charset"))
         settings->setValue("terminal/charset", "UTF-8");
 
@@ -221,7 +221,7 @@ void defaultSettings(QSettings* settings)
     if(!settings->contains("ui/keyboardFadeOutDelay"))
         settings->setValue("ui/keyboardFadeOutDelay", 4000);
     if(!settings->contains("ui/showExtraLinesFromCursor"))
-        settings->setValue("ui/showExtraLinesFromCursor", 1);
+        settings->setValue("ui/showExtraLinesFromCursor", 2);
     if(!settings->contains("ui/vkbShowMethod"))
         settings->setValue("ui/vkbShowMethod", "move");  // "fade", "move", "off"
     if(!settings->contains("ui/keyPressFeedback"))
@@ -230,7 +230,7 @@ void defaultSettings(QSettings* settings)
         settings->setValue("ui/dragMode", "scroll");  // "gestures, "scroll", "select" ("off" would also be ok)
 
     if(!settings->contains("state/createdByVersion"))
-        settings->setValue("state/createdByVersion", "1.1");
+        settings->setValue("state/createdByVersion", "1.3");
 
     if(!settings->contains("gestures/panLeftTitle"))
         settings->setValue("gestures/panLeftTitle", "Alt-Right");

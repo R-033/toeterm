@@ -27,6 +27,15 @@ Page {
         util.setSettingsValue("terminal/charset", charsetName);
         ptyiface.changeCharset(charsetName);
     }
+    Timer {
+        id: scrollDownTimer
+        running: false
+        repeat: false
+        interval: 300
+        onTriggered: {
+            mainSettingsFlickable.scrollToBottom();
+        }
+    }
     SilicaFlickable {
         id: mainSettingsFlickable
         anchors.fill: parent
@@ -161,13 +170,14 @@ Page {
                 buttonHeight: Theme.iconSizeLarge
                 title: qsTr("Keyboard layout")
                 expanded: pageStack.previousPage() ? pageStack.previousPage().settingsLayoutsOpened : false
-                onExpandedChanged: { pageStack.previousPage().settingsLayoutsOpened = expanded; }
+                onExpandedChanged: { pageStack.previousPage().settingsLayoutsOpened = expanded; scrollDownTimer.restart(); }
                 Component {
                     id: listDelegate2
                     ListItem {
                         enabled: section3.expanded
                         highlighted: layoutWindow.currentLayout === modelData
                         Label {
+                            id: delText
                             text: modelData.charAt(0).toUpperCase() + modelData.slice(1);
                             color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
                             x: Theme.paddingLarge
@@ -177,7 +187,6 @@ Page {
                             layoutWindow.currentLayout = modelData
                             util.setSettingsValue("ui/keyboardLayout", modelData);
                             pageStack.previousPage().keyboardItem.reloadLayout();
-                            util.notifyText(modelData);
                             pageStack.pop();
                         }
                     }
@@ -195,7 +204,7 @@ Page {
                 buttonHeight: Theme.iconSizeLarge
                 title: qsTr("Settings")
                 expanded: pageStack.previousPage() ? pageStack.previousPage().settingsSettingsOpened : false
-                onExpandedChanged: pageStack.previousPage().settingsSettingsOpened = expanded
+                onExpandedChanged: { pageStack.previousPage().settingsSettingsOpened = expanded; scrollDownTimer.restart(); }
                 content.sourceComponent: Column {
                     Slider {
                         enabled: section4.expanded
@@ -324,6 +333,7 @@ Page {
                         onCheckedChanged: {
                             util.setSettingsValue("ui/showBackground", !checked);
                             pageStack.previousPage().bgDrawItem.visible = util.settingsValueBool("ui/showBackground");
+                            pageStack.previousPage().bgTimerItem.restart();
                         }
                     }
                 }
@@ -333,14 +343,14 @@ Page {
                 buttonHeight: Theme.iconSizeLarge
                 title: qsTr("Color scheme")
                 expanded: pageStack.previousPage() ? pageStack.previousPage().settingsColorsOpened : false
-                onExpandedChanged: { pageStack.previousPage().settingsColorsOpened = expanded; }
+                onExpandedChanged: { pageStack.previousPage().settingsColorsOpened = expanded; scrollDownTimer.restart(); }
                 Component {
                     id: listDelegate3
                     ListItem {
                         enabled: section5.expanded
                         highlighted: colorsWindow.currentScheme === modelData
                         Label {
-                            text: modelData
+                            text: modelData.replace("_"," ")
                             color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
                             x: Theme.paddingLarge
                             anchors.verticalCenter: parent.verticalCenter
@@ -349,7 +359,8 @@ Page {
                             colorsWindow.currentScheme = modelData;
                             util.setSettingsValue("ui/colorScheme", modelData);
                             pageStack.previousPage().textRenderItem.loadColorScheme(modelData);
-                            pageStack.previousPage().bgDrawItem.color = "#" + pageStack.previousPage().textRenderItem.getBgColor();
+                            pageStack.previousPage().bgDrawItem.color = "#" + pageStack.previousPage().textRenderItem.getColor("colors/bgColor");
+                            pageStack.previousPage().bgTimerItem.restart();
                             section5.expanded = false;
                         }
                     }

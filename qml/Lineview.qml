@@ -28,6 +28,7 @@ Rectangle {
     property int cursorWidth: 10
     property int cursorHeight: 10
     property int extraLines: 1
+    property string fgColor: "#ffffff"
 
     color: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity * 0.5)
     height: 0
@@ -49,12 +50,11 @@ Rectangle {
 
     Rectangle {
         x: cursorX
-        y: lineTextCol.y + fontHeightHack.height*(extraLines+1) - cursorHeight - 3
+        y: lineTextCol.y + fontHeightHack.height*(extraLines+1) - cursorHeight
         width: cursorWidth
         height: cursorHeight
-        color: "transparent"
-        border.color: "#ffffff"
-        border.width: 1
+        color: lineView.fgColor
+        opacity: 0.5
     }
 
     Column {
@@ -72,7 +72,7 @@ Rectangle {
                 width: lineTextCol.width
                 color: "transparent"
                 Text {
-                    color: "#ffffff"
+                    color: lineView.fgColor
                     font.family: util.settingsValue("ui/fontFamily")
                     font.pointSize: lineView.fontPointSize
                     text: modelData

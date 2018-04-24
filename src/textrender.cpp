@@ -44,6 +44,8 @@ void TextRender::loadColorScheme(QString layoutName) {
         colorScheme->setValue("colors/bdColor", "FFFFFF");
     if(!colorScheme->contains("colors/fgColor"))
         colorScheme->setValue("colors/fgColor", "D2D2D2");
+    if(!colorScheme->contains("colors/vkbBgColor"))
+        colorScheme->setValue("colors/vkbBgColor", "404040");
     if(!colorScheme->contains("paletteNormal/black"))
         colorScheme->setValue("paletteNormal/black", "000000");
     if(!colorScheme->contains("paletteNormal/red"))
@@ -117,15 +119,15 @@ void TextRender::updatePalette() {
         qFatal("invalid color table");
 }
 
-QString TextRender::getBgColor() {
-    return colorScheme->value("colors/bgColor").toString();
-}
-
 QColor TextRender::qColorFromHex(QString hex) {
     int r, g, b;
     char *sthex = colorScheme->value(hex).toString().toUtf8().data();
     sscanf(sthex, "%02x%02x%02x", &r, &g, &b);
     return QColor(r, g, b);
+}
+
+QString TextRender::getColor(QString name) {
+    return colorScheme->value(name).toString();
 }
 
 TextRender::~TextRender()

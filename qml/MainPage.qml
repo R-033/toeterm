@@ -16,6 +16,7 @@ Page {
     property bool settingsColorsOpened: false
     property bool settingsSettingsOpened: false
     property Item bgDrawItem: bgDraw
+    property Timer bgTimerItem: bgColorTimer
     Rectangle {
         property int fontSize: 14*pixelRatio
 
@@ -58,7 +59,7 @@ Page {
 
         Rectangle {
             id: bgDraw
-            anchors.fill: textrender
+            anchors.fill: parent
             visible: false
         }
 
@@ -66,10 +67,23 @@ Page {
             id: bgColorTimer
             running: true
             repeat: false
-            interval: 50
+            interval: 0
             onTriggered: {
-                bgDraw.color = "#" + textrender.getBgColor();
+                bgDraw.color = "#" + textrender.getColor("colors/bgColor");
                 bgDraw.visible = util.settingsValueBool("ui/showBackground");
+                if (util.settingsValueBool("ui/showBackground")) {
+                    vkb.backgroundColorActive = Theme.rgba("#" + textrender.getColor("colors/vkbBgColor"), Theme.highlightBackgroundOpacity * 1.5);
+                    vkb.keyHilightBgColor = Theme.rgba("#" + textrender.getColor("colors/vkbBgColor"), Theme.highlightBackgroundOpacity * 2.25);
+                    vkb.indicatorColor = "#" + textrender.getColor("colors/vkbBgColor")
+                    lineView.color = Theme.rgba("#" + textrender.getColor("colors/vkbBgColor"), Theme.highlightBackgroundOpacity * 1.5);
+                    lineView.fgColor = "#" + textrender.getColor("colors/fgColor");
+                } else {
+                    vkb.backgroundColorActive = Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity * 0.5);
+                    vkb.keyHilightBgColor = Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity);
+                    vkb.indicatorColor = Theme.highlightBackgroundColor
+                    lineView.color = Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity * 0.5);
+                    lineView.fgColor = "#ffffff";
+                }
             }
         }
 
@@ -324,7 +338,7 @@ Page {
         width: 0
         height: 0
         radius: 5
-        color: Theme.highlightBackgroundColor
+        color: vkb.indicatorColor
         property string label: ""
         Text {
             color: "#FFFFFF"
@@ -356,12 +370,29 @@ Page {
         anchors.right: parent.right
     }
 
+    function showLayoutSwitcher(key) {
+        visualKeyFeedbackRect.width = key.width*2
+        visualKeyFeedbackRect.height = key.height*2.5
+        var mappedCoord = window.mapFromItem(key, 0, 0);
+        visualKeyFeedbackRect.x = mappedCoord.x - (visualKeyFeedbackRect.width-key.width)/2
+        visualKeyFeedbackRect.y = mappedCoord.y - key.height*2.5
+        visualKeyFeedbackRect.visible = true;
+    }
+
+    function setLayoutSwitcherText(kbdl) {
+        kbdl = kbdl.charAt(0).toUpperCase() + kbdl.slice(1)
+        visualKeyFeedbackRect.label = kbdl
+        window.wakeVKB();
+    }
+
     // area that handles gestures/select/scroll modes and vkb-keypresses
     MultiPointTouchArea {
         id: multiTouchArea
         anchors.fill: parent
         property int firstTouchId: -1
         property var pressedKeys: ({})
+        property real spaceXswipe;
+        property bool spacePressed: false;
         onPressed: {
             touchPoints.forEach(function (touchPoint) {
                 var t_y = touchPoint.y + y;
@@ -375,6 +406,10 @@ Page {
                 var key = vkb.keyAt(touchPoint.x, t_y);
                 if (key != null) {
                     key.handlePress(multiTouchArea, touchPoint.x, t_y);
+                    if (key.code === 0x20) {
+                        spaceXswipe = touchPoint.x;
+                        spacePressed = true;
+                    }
                 }
                 multiTouchArea.pressedKeys[touchPoint.pointId] = key;
             });
@@ -390,15 +425,25 @@ Page {
                 var key = multiTouchArea.pressedKeys[touchPoint.pointId];
                 if (key != null) {
                     if (!key.handleMove(multiTouchArea, touchPoint.x, t_y)) {
-                        delete multiTouchArea.pressedKeys[touchPoint.pointId];
-
                         // This means that the user swiped out of the current key.
                         // Find the new key in that position and make it the currently
                         // highlighted key.
                         key = vkb.keyAt(touchPoint.x, t_y);
                         if (key != null) {
-                            key.handlePress(multiTouchArea, touchPoint.x, t_y);
+                            if (!spacePressed) {
+                                key.handlePress(multiTouchArea, touchPoint.x, t_y);
+                            } else {
+                                 if (Math.abs(spaceXswipe - touchPoint.x) > 50) {
+                                    if (!visualKeyFeedbackRect.visible) {
+                                        showLayoutSwitcher(multiTouchArea.pressedKeys[touchPoint.pointId]);
+                                    }
+                                    setLayoutSwitcherText(vkb.getLayoutNameAtPos(spaceXswipe < touchPoint.x - 50 ? -1 : 1));
+                                } else {
+                                    setLayoutSwitcherText(util.settingsValue("ui/keyboardLayout"));
+                                }
+                            }
                         }
+                        delete multiTouchArea.pressedKeys[touchPoint.pointId];
                         multiTouchArea.pressedKeys[touchPoint.pointId] = key;
                     }
                 }
@@ -429,7 +474,16 @@ Page {
 
                 var key = multiTouchArea.pressedKeys[touchPoint.pointId];
                 if (key != null) {
-                    key.handleRelease(multiTouchArea, touchPoint.x, t_y);
+                    if (spacePressed) {
+                        if (spaceXswipe < touchPoint.x - 50) {
+                            vkb.nextLayout();
+                        } else if (spaceXswipe > touchPoint.x + 50) {
+                            vkb.prevLayout();
+                        }
+                        key.handleRelease(multiTouchArea, touchPoint.x, t_y, Math.abs(spaceXswipe - touchPoint.x) > 50);
+                        spacePressed = false;
+                        visualKeyFeedbackRect.visible = false;
+                    } else key.handleRelease(multiTouchArea, touchPoint.x, t_y);
                 }
                 delete multiTouchArea.pressedKeys[touchPoint.pointId];
             });

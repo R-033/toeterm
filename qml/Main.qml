@@ -26,7 +26,7 @@ ApplicationWindow {
     focus: true
     Keys.onPressed: {
         if (window) {
-            window.vkbKeypress(event.key,event.modifiers);
+            term.keyPress(event.key,event.modifiers);
         }
     }
     property string windowTitle: util.currentWindowTitle()

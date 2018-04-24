@@ -64,7 +64,7 @@ public:
     QColor qColorFromHex(QString hex);
     void updatePalette();
     Q_INVOKABLE void loadColorScheme(QString layoutName);
-    Q_INVOKABLE QString getBgColor();
+    Q_INVOKABLE QString getColor(QString name);
 
 signals:
     void myWidthChanged(int newWidth);

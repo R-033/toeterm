@@ -250,6 +250,9 @@ void Terminal::keyPress(int key, int modifiers)
         toWrite += QString(1,ch_ESC);
     }
 
+    if (toWrite.isEmpty())
+           toWrite += c;
+
     if(iPtyIFace)
         iPtyIFace->writeTerm(toWrite);
 }

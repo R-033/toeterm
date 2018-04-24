@@ -25,7 +25,7 @@ Rectangle {
     color: "transparent"
 
     width: parent.width
-    height: childrenRect.height + outmargins
+    height: childrenRect.height
 
     property int keyModifiers: 0
     property variant resetSticky: 0
@@ -34,11 +34,12 @@ Rectangle {
 
     property string keyFgColor: "#ffffff"
     property string keyHilightBgColor: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity)
-    property string keyBorderColor:  "#00000000"
+    property string backgroundColorActive: Theme.rgba(Theme.highlightBackgroundColor, Theme.highlightBackgroundOpacity * 0.5)
+    property string indicatorColor: Theme.highlightBackgroundColor
 
     property bool active: false
 
-    property int outmargins: 1
+    property int outmargins: 0
     property int keyspacing: 0
     property int keysPerRow: keyLoader.vkbColumns()
     property real keywidth: (keyboard.width - keyspacing*keysPerRow - outmargins*2)/keysPerRow;
@@ -82,7 +83,7 @@ Rectangle {
     }
 
     onCurrentKeyPressedChanged: {
-        if(     currentKeyPressed != 0 &&
+        if(     currentKeyPressed && currentKeyPressed != 0 &&
                 currentKeyPressed.currentLabel.length === 1 &&
                 currentKeyPressed.currentLabel !== " " &&
                 active) {
@@ -108,15 +109,15 @@ Rectangle {
         var Key_Down = 0x01000015;
         var Key_PageUp = 0x01000016;
         var Key_PageDown = 0x01000017;
-        var Key_Space = 0x20;
-
+        var Key_Return = 0x1000004;
         return (key === Key_Left ||
                 key === Key_Up ||
                 key === Key_Right ||
                 key === Key_Down ||
                 key === Key_PageUp ||
                 key === Key_PageDown ||
-                key === Key_Space);
+                key == Key_Return
+                );
     }
 
     function reloadLayout()
@@ -134,6 +135,14 @@ Rectangle {
         // makes the keyboard component reload itself with new data
         keyboardLoader.sourceComponent = undefined
         keyboardLoader.sourceComponent = keyboardContents
+        updateWidth()
+    }
+
+    onWidthChanged: updateWidth()
+
+    function updateWidth() {
+        keysPerRow = keyLoader.vkbColumns()
+        keywidth = (keyboard.width - keyspacing*keysPerRow - outmargins*2)/keysPerRow;
     }
 
     //borrowed from nemo-keyboard
@@ -155,5 +164,32 @@ Rectangle {
         }
 
         return null
+    }
+
+    function nextLayout() {
+        var layoutName = getLayoutNameAtPos(-1);
+        util.setSettingsValue("ui/keyboardLayout", layoutName);
+        vkb.reloadLayout();
+        layoutName = layoutName.charAt(0).toUpperCase() + layoutName.slice(1);
+        util.notifyText(layoutName);
+    }
+
+    function prevLayout() {
+        var layoutName = getLayoutNameAtPos(1);
+        util.setSettingsValue("ui/keyboardLayout", layoutName);
+        vkb.reloadLayout();
+        layoutName = layoutName.charAt(0).toUpperCase() + layoutName.slice(1);
+        util.notifyText(layoutName);
+    }
+
+    function getLayoutNameAtPos(pos) {
+        var layoutsList = keyLoader.availableLayouts();
+        var layoutIndex = layoutsList.indexOf(util.settingsValue("ui/keyboardLayout")) + pos;
+        if (layoutIndex < 0) {
+            layoutIndex = layoutsList.length - 1;
+        } else if (layoutIndex >= layoutsList.length) {
+            layoutIndex = 0;
+        }
+        return layoutsList[layoutIndex];
     }
 }

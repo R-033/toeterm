@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_TextRender_t {
-    QByteArrayData data[21];
-    char stringdata0[280];
+    QByteArrayData data[22];
+    char stringdata0[283];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,13 +43,14 @@ QT_MOC_LITERAL(10, 133, 14), // "cursorPixelPos"
 QT_MOC_LITERAL(11, 148, 15), // "cursorPixelSize"
 QT_MOC_LITERAL(12, 164, 15), // "loadColorScheme"
 QT_MOC_LITERAL(13, 180, 10), // "layoutName"
-QT_MOC_LITERAL(14, 191, 10), // "getBgColor"
-QT_MOC_LITERAL(15, 202, 7), // "myWidth"
-QT_MOC_LITERAL(16, 210, 8), // "myHeight"
-QT_MOC_LITERAL(17, 219, 9), // "fontWidth"
-QT_MOC_LITERAL(18, 229, 10), // "fontHeight"
-QT_MOC_LITERAL(19, 240, 13), // "fontPointSize"
-QT_MOC_LITERAL(20, 254, 25) // "showBufferScrollIndicator"
+QT_MOC_LITERAL(14, 191, 8), // "getColor"
+QT_MOC_LITERAL(15, 200, 4), // "name"
+QT_MOC_LITERAL(16, 205, 7), // "myWidth"
+QT_MOC_LITERAL(17, 213, 8), // "myHeight"
+QT_MOC_LITERAL(18, 222, 9), // "fontWidth"
+QT_MOC_LITERAL(19, 232, 10), // "fontHeight"
+QT_MOC_LITERAL(20, 243, 13), // "fontPointSize"
+QT_MOC_LITERAL(21, 257, 25) // "showBufferScrollIndicator"
 
     },
     "TextRender\0myWidthChanged\0\0newWidth\0"
@@ -57,9 +58,9 @@ QT_MOC_LITERAL(20, 254, 25) // "showBufferScrollIndicator"
     "showBufferScrollIndicatorChanged\0"
     "redraw\0updateTermSize\0cursorPixelPos\0"
     "cursorPixelSize\0loadColorScheme\0"
-    "layoutName\0getBgColor\0myWidth\0myHeight\0"
-    "fontWidth\0fontHeight\0fontPointSize\0"
-    "showBufferScrollIndicator"
+    "layoutName\0getColor\0name\0myWidth\0"
+    "myHeight\0fontWidth\0fontHeight\0"
+    "fontPointSize\0showBufferScrollIndicator"
 };
 #undef QT_MOC_LITERAL
 
@@ -70,7 +71,7 @@ static const uint qt_meta_data_TextRender[] = {
        0,       // classname
        0,    0, // classinfo
       10,   14, // methods
-       6,   80, // properties
+       6,   82, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
@@ -90,7 +91,7 @@ static const uint qt_meta_data_TextRender[] = {
       10,    0,   74,    2, 0x02 /* Public */,
       11,    0,   75,    2, 0x02 /* Public */,
       12,    1,   76,    2, 0x02 /* Public */,
-      14,    0,   79,    2, 0x02 /* Public */,
+      14,    1,   79,    2, 0x02 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -106,15 +107,15 @@ static const uint qt_meta_data_TextRender[] = {
     QMetaType::QPoint,
     QMetaType::QSize,
     QMetaType::Void, QMetaType::QString,   13,
-    QMetaType::QString,
+    QMetaType::QString, QMetaType::QString,   15,
 
  // properties: name, type, flags
-      15, QMetaType::Int, 0x00495103,
       16, QMetaType::Int, 0x00495103,
-      17, QMetaType::Int, 0x00495001,
+      17, QMetaType::Int, 0x00495103,
       18, QMetaType::Int, 0x00495001,
-      19, QMetaType::Int, 0x00495103,
-      20, QMetaType::Bool, 0x00495103,
+      19, QMetaType::Int, 0x00495001,
+      20, QMetaType::Int, 0x00495103,
+      21, QMetaType::Bool, 0x00495103,
 
  // properties: notify_signal_id
        0,
@@ -144,7 +145,7 @@ void TextRender::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 7: { QSize _r = _t->cursorPixelSize();
             if (_a[0]) *reinterpret_cast< QSize*>(_a[0]) = _r; }  break;
         case 8: _t->loadColorScheme((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 9: { QString _r = _t->getBgColor();
+        case 9: { QString _r = _t->getColor((*reinterpret_cast< QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         default: ;
         }
