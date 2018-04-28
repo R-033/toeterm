@@ -53,28 +53,24 @@ SOURCES       = src/main.cpp \
 		src/textrender.cpp \
 		src/ptyiface.cpp \
 		src/util.cpp \
-		src/keyloader.cpp \
-		src/mainwindow.cpp qrc_resources.cpp \
+		src/keyloader.cpp qrc_resources.cpp \
 		moc_ptyiface.cpp \
 		moc_terminal.cpp \
 		moc_textrender.cpp \
 		moc_util.cpp \
-		moc_keyloader.cpp \
-		moc_mainwindow.cpp
+		moc_keyloader.cpp
 OBJECTS       = main.o \
 		terminal.o \
 		textrender.o \
 		ptyiface.o \
 		util.o \
 		keyloader.o \
-		mainwindow.o \
 		qrc_resources.o \
 		moc_ptyiface.o \
 		moc_terminal.o \
 		moc_textrender.o \
 		moc_util.o \
-		moc_keyloader.o \
-		moc_mainwindow.o
+		moc_keyloader.o
 DIST          = translations/toeterm-nl.ts \
 		translations/toeterm-ru.ts \
 		rpm/toeterm.yaml \
@@ -177,14 +173,12 @@ DIST          = translations/toeterm-nl.ts \
 		src/terminal.h \
 		src/textrender.h \
 		src/util.h \
-		src/keyloader.h \
-		src/mainwindow.h src/main.cpp \
+		src/keyloader.h src/main.cpp \
 		src/terminal.cpp \
 		src/textrender.cpp \
 		src/ptyiface.cpp \
 		src/util.cpp \
-		src/keyloader.cpp \
-		src/mainwindow.cpp
+		src/keyloader.cpp
 QMAKE_TARGET  = toeterm
 DESTDIR       = 
 TARGET        = toeterm
@@ -418,8 +412,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents resources.qrc $(DISTDIR)/
-	$(COPY_FILE) --parents src/ptyiface.h src/terminal.h src/textrender.h src/util.h src/keyloader.h src/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/main.cpp src/terminal.cpp src/textrender.cpp src/ptyiface.cpp src/util.cpp src/keyloader.cpp src/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/ptyiface.h src/terminal.h src/textrender.h src/util.h src/keyloader.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/main.cpp src/terminal.cpp src/textrender.cpp src/ptyiface.cpp src/util.cpp src/keyloader.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents translations/toeterm-ru.ts translations/toeterm-nl.ts $(DISTDIR)/
 
 
@@ -480,9 +474,9 @@ qrc_resources.cpp: resources.qrc \
 		icons/enter.png
 	/usr/lib/qt5/bin/rcc -name resources resources.qrc -o qrc_resources.cpp
 
-compiler_moc_header_make_all: moc_ptyiface.cpp moc_terminal.cpp moc_textrender.cpp moc_util.cpp moc_keyloader.cpp moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_ptyiface.cpp moc_terminal.cpp moc_textrender.cpp moc_util.cpp moc_keyloader.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_ptyiface.cpp moc_terminal.cpp moc_textrender.cpp moc_util.cpp moc_keyloader.cpp moc_mainwindow.cpp
+	-$(DEL_FILE) moc_ptyiface.cpp moc_terminal.cpp moc_textrender.cpp moc_util.cpp moc_keyloader.cpp
 moc_ptyiface.cpp: src/ptyiface.h
 	/usr/lib/qt5/bin/moc $(DEFINES) -I/usr/share/qt5/mkspecs/linux-g++ -I/home/mersdk/share/Documents/sailproj/toeterm -I/usr/include/nemonotifications-qt5 -I/usr/include/sailfishapp -I/usr/include/qt5 -I/usr/include/qt5/QtQuick -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtFeedback -I/usr/include/qt5/QtQml -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.8.3 -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.8.3/armv7hl-meego-linux-gnueabi -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.8.3/backward -I/opt/cross/lib/gcc/armv7hl-meego-linux-gnueabi/4.8.3/include -I/usr/local/include -I/opt/cross/lib/gcc/armv7hl-meego-linux-gnueabi/4.8.3/include-fixed -I/opt/cross/armv7hl-meego-linux-gnueabi/include -I/usr/include src/ptyiface.h -o moc_ptyiface.cpp
 
@@ -499,9 +493,6 @@ moc_util.cpp: src/util.h
 moc_keyloader.cpp: src/keyloader.h
 	/usr/lib/qt5/bin/moc $(DEFINES) -I/usr/share/qt5/mkspecs/linux-g++ -I/home/mersdk/share/Documents/sailproj/toeterm -I/usr/include/nemonotifications-qt5 -I/usr/include/sailfishapp -I/usr/include/qt5 -I/usr/include/qt5/QtQuick -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtFeedback -I/usr/include/qt5/QtQml -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.8.3 -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.8.3/armv7hl-meego-linux-gnueabi -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.8.3/backward -I/opt/cross/lib/gcc/armv7hl-meego-linux-gnueabi/4.8.3/include -I/usr/local/include -I/opt/cross/lib/gcc/armv7hl-meego-linux-gnueabi/4.8.3/include-fixed -I/opt/cross/armv7hl-meego-linux-gnueabi/include -I/usr/include src/keyloader.h -o moc_keyloader.cpp
 
-moc_mainwindow.cpp: src/mainwindow.h
-	/usr/lib/qt5/bin/moc $(DEFINES) -I/usr/share/qt5/mkspecs/linux-g++ -I/home/mersdk/share/Documents/sailproj/toeterm -I/usr/include/nemonotifications-qt5 -I/usr/include/sailfishapp -I/usr/include/qt5 -I/usr/include/qt5/QtQuick -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtFeedback -I/usr/include/qt5/QtQml -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.8.3 -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.8.3/armv7hl-meego-linux-gnueabi -I/opt/cross/armv7hl-meego-linux-gnueabi/include/c++/4.8.3/backward -I/opt/cross/lib/gcc/armv7hl-meego-linux-gnueabi/4.8.3/include -I/usr/local/include -I/opt/cross/lib/gcc/armv7hl-meego-linux-gnueabi/4.8.3/include-fixed -I/opt/cross/armv7hl-meego-linux-gnueabi/include -I/usr/include src/mainwindow.h -o moc_mainwindow.cpp
-
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
 compiler_yacc_decl_make_all:
@@ -517,7 +508,6 @@ compiler_clean: compiler_rcc_clean compiler_moc_header_clean
 main.o: src/main.cpp /usr/share/qt5/mkspecs/linux-g++/qplatformdefs.h \
 		/usr/share/qt5/mkspecs/common/posix/qplatformdefs.h \
 		/usr/share/qt5/mkspecs/common/c89/qplatformdefs.h \
-		src/mainwindow.h \
 		src/ptyiface.h \
 		src/terminal.h \
 		src/textrender.h \
@@ -543,7 +533,6 @@ ptyiface.o: src/ptyiface.cpp src/terminal.h \
 util.o: src/util.cpp /usr/share/qt5/mkspecs/linux-g++/qplatformdefs.h \
 		/usr/share/qt5/mkspecs/common/posix/qplatformdefs.h \
 		/usr/share/qt5/mkspecs/common/c89/qplatformdefs.h \
-		src/mainwindow.h \
 		src/terminal.h \
 		src/util.h \
 		src/textrender.h
@@ -552,12 +541,6 @@ util.o: src/util.cpp /usr/share/qt5/mkspecs/linux-g++/qplatformdefs.h \
 keyloader.o: src/keyloader.cpp src/keyloader.h \
 		src/util.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o keyloader.o src/keyloader.cpp
-
-mainwindow.o: src/mainwindow.cpp /usr/share/qt5/mkspecs/linux-g++/qplatformdefs.h \
-		/usr/share/qt5/mkspecs/common/posix/qplatformdefs.h \
-		/usr/share/qt5/mkspecs/common/c89/qplatformdefs.h \
-		src/mainwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o src/mainwindow.cpp
 
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
@@ -576,9 +559,6 @@ moc_util.o: moc_util.cpp
 
 moc_keyloader.o: moc_keyloader.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_keyloader.o moc_keyloader.cpp
-
-moc_mainwindow.o: moc_mainwindow.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
 ####### Install
 

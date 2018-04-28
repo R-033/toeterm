@@ -13,7 +13,7 @@ Name:       toeterm
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    A terminal emulator with a custom virtual keyboard
-Version:    1.3
+Version:    1.4
 Release:    1
 Group:      System/Base
 License:    GPLv2

@@ -27,7 +27,7 @@
 #include "util.h"
 
 Terminal::Terminal(QObject *parent) :
-    QObject(parent), iRenderer(0), iPtyIFace(0), iWindow(0), iUtil(0),
+    QObject(parent), iRenderer(0), iPtyIFace(0), iUtil(0),
     iTermSize(0,0), iEmitCursorChangeSignal(true),
     iShowCursor(true), iUseAltScreenBuffer(false), iAppCursorKeys(false)
 {
@@ -186,7 +186,7 @@ void Terminal::keyPress(int key, int modifiers)
 
     QString toWrite;
 
-    if(key <= 0xFF) {
+    if(key <= 0xFF || (key >= 0x410 && key <= 0x44F)) {
         if(modifiers & Qt::AltModifier)
             toWrite.append(ch_ESC);
 
@@ -249,9 +249,6 @@ void Terminal::keyPress(int key, int modifiers)
     if( key==Qt::Key_Escape ) {
         toWrite += QString(1,ch_ESC);
     }
-
-    if (toWrite.isEmpty())
-           toWrite += c;
 
     if(iPtyIFace)
         iPtyIFace->writeTerm(toWrite);
@@ -951,9 +948,7 @@ void Terminal::oscSequence(const QString& seq)
         (seq.at(1)=='0' || seq.at(1)=='2') &&
         seq.at(2)==';' )
     {
-        if(iWindow) {
-            iUtil->setWindowTitle(seq.mid(3));
-        }
+        iUtil->setWindowTitle(seq.mid(3));
         return;
     }
 

@@ -239,6 +239,7 @@ Page {
                                 currentDragMode = value == 0 ? "gestures" : value == 1 ? "scroll" : "select";
                                 util.setSettingsValue("ui/dragMode", currentDragMode);
                                 term.clearSelection();
+                                cpMenu.enableCopy = util.terminalHasSelection()
                             }
                         }
                         Slider {
@@ -294,7 +295,7 @@ Page {
                             MenuItem { text: "Macintosh"; onClicked: charsetContextMenu.menuItemPress(text); highlighted: text == charsetFieldCombo.value }
                             MenuItem { text: "KOI8-R"; onClicked: charsetContextMenu.menuItemPress(text); highlighted: text == charsetFieldCombo.value }
                             MenuItem { text: "KOI8-U"; onClicked: charsetContextMenu.menuItemPress(text); highlighted: text == charsetFieldCombo.value }
-                            MenuItem { text: "Custom"; onClicked: {
+                            MenuItem { text: qsTr("Custom"); onClicked: {
                                     charsetField.visible = true;
                                     charsetField.text = "";
                                     charsetFieldCombo.visible = false;
@@ -350,7 +351,7 @@ Page {
                         enabled: section5.expanded
                         highlighted: colorsWindow.currentScheme === modelData
                         Label {
-                            text: modelData.replace("_"," ")
+                            text: modelData.split("_").join(" ")
                             color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
                             x: Theme.paddingLarge
                             anchors.verticalCenter: parent.verticalCenter

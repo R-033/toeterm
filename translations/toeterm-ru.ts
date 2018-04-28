@@ -11,7 +11,7 @@
     <message>
         <location filename="../qml/AboutPage.qml" line="55"/>
         <source>Terminal size</source>
-        <translation>Размер терминала</translation>
+        <translation>Размер окна</translation>
     </message>
     <message>
         <location filename="../qml/AboutPage.qml" line="77"/>
@@ -21,18 +21,18 @@
     <message>
         <location filename="../qml/AboutPage.qml" line="95"/>
         <source>Based on ThumbTerm by Olli Vanhoja, which is fork of FingerTerm by Heikki Holstila</source>
-        <translation>Основан на ThumbTerm от Olli Vanhoja, который является форком FingerTerm от Heikki Holstila</translation>
+        <translation>Основан на ThumbTerm от Olli Vanhoja, форке FingerTerm от Heikki Holstila</translation>
     </message>
     <message>
         <location filename="../qml/AboutPage.qml" line="107"/>
         <source>Config files for adjusting settings are at:</source>
-        <translation>Файлы конфигурации доступны в директории:</translation>
+        <translation>Файлы конфигурации находятся здесь:</translation>
     </message>
 </context>
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/MainPage.qml" line="269"/>
+        <location filename="../qml/MainPage.qml" line="270"/>
         <source>An error occurred</source>
         <translation>Произошла ошибка</translation>
     </message>
@@ -68,7 +68,7 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="132"/>
         <source>URL grabber</source>
-        <translation>Сбор ссылок</translation>
+        <translation>Ссылки</translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="147"/>
@@ -78,7 +78,7 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="171"/>
         <source>Keyboard layout</source>
-        <translation>Раскладка клавиатуры</translation>
+        <translation>Клавиатура</translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="205"/>
@@ -93,7 +93,7 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="231"/>
         <source>Drag mode</source>
-        <translation>Режим нажатий</translation>
+        <translation>Нажатие</translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="237"/>
@@ -103,7 +103,7 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="237"/>
         <source>Scroll</source>
-        <translation>Прокрутка</translation>
+        <translation>Скролл</translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="237"/>
@@ -111,64 +111,69 @@
         <translation>Выделение</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="246"/>
+        <location filename="../qml/SettingsMenu.qml" line="247"/>
         <source>Keyboard behavior</source>
-        <translation>Поведение клавиатуры</translation>
+        <translation>Клавиатура</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="252"/>
+        <location filename="../qml/SettingsMenu.qml" line="253"/>
         <source>Off</source>
         <translation>Выкл</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="252"/>
+        <location filename="../qml/SettingsMenu.qml" line="253"/>
         <source>Fade</source>
-        <translation>Таяние</translation>
+        <translation>Превью</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="252"/>
+        <location filename="../qml/SettingsMenu.qml" line="253"/>
         <source>Move</source>
         <translation>Сдвиг</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="262"/>
+        <location filename="../qml/SettingsMenu.qml" line="263"/>
         <source>Keyboard delay</source>
         <translation>Задержка клавиатуры</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="266"/>
+        <location filename="../qml/SettingsMenu.qml" line="267"/>
         <source>No delay</source>
         <translation>Без задержки</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="282"/>
+        <location filename="../qml/SettingsMenu.qml" line="283"/>
         <source>Keyboard feedback</source>
-        <translation>Вибрация клавиатуры</translation>
+        <translation>Вибрация при вводе</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="288"/>
+        <location filename="../qml/SettingsMenu.qml" line="289"/>
         <source>Charset</source>
         <translation>Кодировка</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="316"/>
-        <source>Apply with Enter key</source>
-        <translation>Нажмите Enter чтобы применить изменения</translation>
+        <location filename="../qml/SettingsMenu.qml" line="298"/>
+        <source>Custom</source>
+        <translation>Другая</translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="317"/>
+        <source>Apply with Enter key</source>
+        <translation>Применение на Enter</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsMenu.qml" line="318"/>
         <source>Custom charset</source>
         <translation>Другая кодировка</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="332"/>
+        <location filename="../qml/SettingsMenu.qml" line="333"/>
         <source>Transparent background</source>
-        <translation type="unfinished"></translation>
+        <translation>Прозрачный фон</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="344"/>
+        <location filename="../qml/SettingsMenu.qml" line="345"/>
         <source>Color scheme</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвета</translation>
     </message>
 </context>
 </TS>

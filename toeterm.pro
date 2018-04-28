@@ -1,6 +1,6 @@
 TARGET = toeterm
 CONFIG += sailfishapp link_pkgconfig
-PKGCONFIG += nemonotifications-qt5
+PKGCONFIG += sailfishapp nemonotifications-qt5
 LIBS += -lutil
 
 system($$PWD/updateversion.sh)
@@ -12,8 +12,7 @@ HEADERS += \
     src/terminal.h \
     src/textrender.h \
     src/util.h \
-    src/keyloader.h \
-    src/mainwindow.h
+    src/keyloader.h
 
 SOURCES += \
     src/main.cpp \
@@ -21,8 +20,7 @@ SOURCES += \
     src/textrender.cpp \
     src/ptyiface.cpp \
     src/util.cpp \
-    src/keyloader.cpp \
-    src/mainwindow.cpp
+    src/keyloader.cpp
 
 OTHER_FILES += qml/*
 
@@ -38,12 +36,6 @@ CONFIG += sailfishapp_i18n
 
 TRANSLATIONS += translations/toeterm-ru.ts
 TRANSLATIONS += translations/toeterm-nl.ts
-
-update_qml.target = qml.qrc
-update_qml.commands = echo>>$${update_qml.target}
-update_qml.depends = $$files(path/to/resource/files/*, true)
-QMAKE_EXTRA_TARGETS += update_qml
-PRE_TARGETDEPS += $${update_qml.target}
 
 DISTFILES += \
     translations/toeterm-nl.ts \

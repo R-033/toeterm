@@ -64,7 +64,6 @@ public:
     virtual ~Terminal() {}
     void setRenderer(TextRender* tr);
     void setPtyIFace(PtyIFace* pty);
-    void setWindow(QQuickView* win) { iWindow=win; }
     void setUtil(Util* util) { iUtil = util; }
 
     void insertInBuffer(const QString& chars);
@@ -133,7 +132,6 @@ private:
 
     TextRender* iRenderer;
     PtyIFace* iPtyIFace;
-    QQuickView* iWindow;
     Util* iUtil;
 
     QList<QList<TermChar> > iBuffer;

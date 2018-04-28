@@ -17,10 +17,14 @@
     along with FingerTerm.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <sailfishapp.h>
+
 #include "qplatformdefs.h"
 
 #include <QtGui>
 #include <QtQml>
+#include <QGuiApplication>
+#include <QQuickView>
 
 extern "C" {
 #include <pty.h>
@@ -30,23 +34,19 @@ extern "C" {
 #include <sys/types.h>
 }
 
-#include "mainwindow.h"
 #include "ptyiface.h"
 #include "terminal.h"
 #include "textrender.h"
 #include "util.h"
-//#include "version.h"
 #include "keyloader.h"
 
 void defaultSettings(QSettings* settings);
 void copyFileFromResources(QString from, QString to);
 
-Q_DECL_EXPORT int main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     QSettings *settings = new QSettings(QDir::homePath()+"/.config/ToeTerm/settings.ini", QSettings::IniFormat);
     defaultSettings(settings);
-
-    QCoreApplication::setApplicationName("ToeTerm");
 
     // fork the child process before creating QGuiApplication
     int socketM;
@@ -94,10 +94,12 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
         exit(0);
     }
 
-    QGuiApplication app(argc, argv);
+    QGuiApplication *app = SailfishApp::application(argc, argv);
+    QQuickView *view = SailfishApp::createView();
+
     QQuickWindow::setDefaultAlphaBuffer(true);
 
-    QScreen* sc = app.primaryScreen();
+    QScreen* sc = app->primaryScreen();
     if(sc){
     sc->setOrientationUpdateMask(Qt::PrimaryOrientation
                                  | Qt::LandscapeOrientation
@@ -107,7 +109,6 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     }
 
     qmlRegisterType<TextRender>("TextRender",1,0,"TextRender");
-    MainWindow view;
 
     Terminal term;
     Util util(settings);
@@ -139,14 +140,14 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
             qFatal("failure loading keyboard layout");
     }
 
-    QQmlContext *context = view.rootContext();
+    QQmlContext *context = view->rootContext();
     context->setContextProperty( "term", &term );
     context->setContextProperty( "util", &util );
     context->setContextProperty( "keyLoader", &keyLoader );
 
-    view.setSource(QUrl("qrc:/qml/Main.qml"));
+    view->setSource(QUrl("qrc:/qml/Main.qml"));
 
-    QObject *root = view.rootObject();
+    QObject *root = view->rootObject();
     if(!root)
         qFatal("no root object - qml error");
 
@@ -159,23 +160,13 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     tr->setUtil(&util);
     tr->setTerminal(&term);
     term.setRenderer(tr);
-    term.setWindow(&view);
-    util.setWindow(&view);
     util.setTerm(&term);
     util.setRenderer(tr);
 
     tr->loadColorScheme(settings->value("ui/colorScheme").toString());
 
     QObject::connect(&term,SIGNAL(displayBufferChanged()),win,SLOT(displayBufferChanged()));
-    QObject::connect(view.engine(),SIGNAL(quit()),&app,SLOT(quit()));
-
-    QSize screenSize = QGuiApplication::primaryScreen()->size();
-    if ((screenSize.width() < 1024 || screenSize.height() < 768 || app.arguments().contains("-fs"))
-            && !app.arguments().contains("-nofs"))
-    {
-        view.showFullScreen();
-    } else
-        view.show();
+    QObject::connect(view->engine(),SIGNAL(quit()),app,SLOT(quit()));
 
     PtyIFace ptyiface(pid, socketM, &term,
                        settings->value("terminal/charset").toString());
@@ -185,7 +176,12 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     context->setContextProperty( "ptyiface", &ptyiface );
 
-    return app.exec();
+    view->showFullScreen();
+
+    util.updateSwipeLock(false);
+    util.updateSwipeLock(true);
+
+    return app->exec();
 }
 
 void defaultSettings(QSettings* settings)
@@ -230,7 +226,7 @@ void defaultSettings(QSettings* settings)
         settings->setValue("ui/dragMode", "scroll");  // "gestures, "scroll", "select" ("off" would also be ok)
 
     if(!settings->contains("state/createdByVersion"))
-        settings->setValue("state/createdByVersion", "1.3");
+        settings->setValue("state/createdByVersion", "1.4");
 
     if(!settings->contains("gestures/panLeftTitle"))
         settings->setValue("gestures/panLeftTitle", "Alt-Right");

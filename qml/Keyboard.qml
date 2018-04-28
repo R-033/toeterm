@@ -39,22 +39,18 @@ Rectangle {
 
     property bool active: false
 
-    property int outmargins: 0
-    property int keyspacing: 0
     property int keysPerRow: keyLoader.vkbColumns()
-    property real keywidth: (keyboard.width - keyspacing*keysPerRow - outmargins*2)/keysPerRow;
+    property real keywidth: keyboard.width/keysPerRow;
 
     Component {
         id: keyboardContents
         Column {
             id: col
             x: (keyboard.width-width)/2
-            spacing: keyboard.keyspacing
             Repeater {
                 id: rowRepeater
                 model: keyLoader.vkbRows()
                 delegate: Row {
-                    spacing: keyboard.keyspacing
                     Repeater {
                         id: colRepeater
                         property int rowIndex: index
@@ -65,7 +61,7 @@ Rectangle {
                             code: keydata[1]
                             label_alt: keydata[2]
                             code_alt: keydata[3]
-                            width: keyboard.keywidth * keydata[4] + ((keydata[4]-1)*keyboard.keyspacing) + 1
+                            width: keyboard.keywidth * keydata[4]
                             sticky: keydata[5]
                         }
                     }
@@ -142,7 +138,7 @@ Rectangle {
 
     function updateWidth() {
         keysPerRow = keyLoader.vkbColumns()
-        keywidth = (keyboard.width - keyspacing*keysPerRow - outmargins*2)/keysPerRow;
+        keywidth = keyboard.width/keysPerRow;
     }
 
     //borrowed from nemo-keyboard

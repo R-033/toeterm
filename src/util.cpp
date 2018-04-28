@@ -26,7 +26,6 @@
 #include <QQuickView>
 #include <QDebug>
 
-#include "mainwindow.h"
 #include "terminal.h"
 #include "util.h"
 #include "textrender.h"
@@ -39,7 +38,6 @@ Util::Util(QSettings *settings, QObject *parent) :
     iAllowGestures(false),
     newSelection(true),
     iSettings(settings),
-    iWindow(0),
     iRenderer(0)
 {
     swipeModeSet = false;
@@ -54,35 +52,15 @@ Util::~Util()
     clearNotifications();
 }
 
-void Util::setWindow(QQuickView* win)
-{
-    iWindow = dynamic_cast<MainWindow*>(win);
-    if(!iWindow)
-        qFatal("invalid main window");
-    connect(iWindow, SIGNAL(focusChanged(bool)), this, SLOT(onMainWinFocusChanged(bool)));
-}
-
 void Util::setWindowTitle(QString title)
 {
     iCurrentWinTitle = title;
-    iWindow->setTitle(title);
     emit windowTitleChanged();
 }
 
 QString Util::currentWindowTitle()
 {
     return iCurrentWinTitle;
-}
-
-void Util::onMainWinFocusChanged(bool in)
-{
-    if (in) {
-        clearNotifications();
-
-        //disable & re-enable swiping when window gains focus (workaround for an "auto mode" bug)
-        updateSwipeLock(false);
-        updateSwipeLock(true);
-    }
 }
 
 void Util::openNewWindow()
@@ -136,7 +114,7 @@ void Util::setSettingsValue(QString key, QVariant value)
 
 QString Util::versionString()
 {
-    return "1.3";
+    return "1.4";
 }
 
 int Util::uiFontSize()
@@ -160,11 +138,11 @@ void Util::keyReleaseFeedback()
 
 void Util::bellAlert()
 {
-    if(!iWindow)
+    //if(!iWindow)
         return;
 
-    if( settingsValue("gen/visualBell").toBool() )
-        emit visualBell();
+    //if( settingsValue("gen/visualBell").toBool() )
+    //    emit visualBell();
 }
 
 void Util::clearNotifications()

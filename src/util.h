@@ -23,7 +23,6 @@
 #include <QtCore>
 
 class Terminal;
-class MainWindow;
 class TextRender;
 class QQuickView;
 
@@ -33,7 +32,6 @@ class Util : public QObject
 public:
     explicit Util(QSettings* settings, QObject *parent = 0);
     virtual ~Util();
-    void setWindow(QQuickView* win);
     void setWindowTitle(QString title);
     Q_INVOKABLE QString currentWindowTitle();
     void setTerm(Terminal* term) { iTerm = term; }
@@ -69,7 +67,6 @@ public:
     static bool charIsHexDigit(QChar ch);
 
 public slots:
-    void onMainWinFocusChanged(bool in);
     void mousePress(float eventX, float eventY);
     void mouseMove(float eventX, float eventY);
     void mouseRelease(float eventX, float eventY);
@@ -104,7 +101,6 @@ private:
     QString iCurrentWinTitle;
 
     QSettings* iSettings;
-    MainWindow* iWindow;
     Terminal* iTerm;
     TextRender* iRenderer;
 };

@@ -115,8 +115,10 @@ void TextRender::updatePalette() {
         iColorTable.append(QColor(ramp[i], ramp[i], ramp[i]));
     iColorTable.append(qColorFromHex("colors/bgColor"));
     iColorTable.append(qColorFromHex("colors/fgColor"));
-    if(iColorTable.size() != 256+2)
+    iColorTable.append(qColorFromHex("colors/bdColor"));
+    if(iColorTable.size() != 256+3)
         qFatal("invalid color table");
+    update();
 }
 
 QColor TextRender::qColorFromHex(QString hex) {
@@ -313,6 +315,8 @@ void TextRender::drawTextFragment(QPainter* painter, float x, float y, QString t
         painter->setFont(iFont);
         if(fg < 8)
             fg += 8;
+        if (fg == 257)
+            fg++;
     } else if(iFont.bold()) {
         iFont.setBold(false);
         painter->setFont(iFont);

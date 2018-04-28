@@ -237,7 +237,7 @@ Rectangle {
 
             // first non-sticky press will cause the sticky to be released
             if( !sticky && keyboard.resetSticky != 0 && keyboard.resetSticky !== key ) {
-                setStickiness(0);
+                keyboard.resetSticky.setStickiness(0);
             }
         }
         else {
@@ -276,9 +276,7 @@ Rectangle {
     {
         if(sticky) {
             if( keyboard.resetSticky != 0 && keyboard.resetSticky !== key ) {
-                stickiness = 0;
-                keyboard.resetSticky = 0;
-                return;
+                keyboard.resetSticky.setStickiness(0);
             }
 
             if(val===-1)

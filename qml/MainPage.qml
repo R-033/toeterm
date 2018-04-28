@@ -17,6 +17,7 @@ Page {
     property bool settingsSettingsOpened: false
     property Item bgDrawItem: bgDraw
     property Timer bgTimerItem: bgColorTimer
+    property string settingsPagePath: Qt.resolvedUrl("SettingsMenu.qml")
     Rectangle {
         property int fontSize: 14*pixelRatio
 
@@ -218,7 +219,7 @@ Page {
                 vkb.visibleSetting = true;
                 textrender.opacity = 1.0;
                 if(vkb.active) {
-                    var move = textrender.cursorPixelPos().y + textrender.fontHeight/2 + textrender.fontHeight*util.settingsValue("ui/showExtraLinesFromCursor");
+                    var move = textrender.cursorPixelPos().y + textrender.fontHeight/2 + textrender.fontHeight;//*util.settingsValue("ui/showExtraLinesFromCursor");
                     if(move < vkb.y) {
                         textrender.y = 0;
                         textrender.cutAfter = vkb.y;
@@ -237,7 +238,7 @@ Page {
                 textrender.cutAfter = textrender.height;
                 textrender.y = 0;
                 if(vkb.active)
-                    textrender.opacity = 0.3;
+                    textrender.opacity = 0.5;
                 else
                     textrender.opacity = 1.0;
             }
@@ -364,7 +365,7 @@ Page {
         property bool visibleSetting: true
         x: 0
         y: parent.height-vkb.height
-        visible: windowHasFocus && visibleSetting
+        visible: visibleSetting
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
@@ -458,11 +459,10 @@ Page {
                     //   - only when not scrolling (y-diff < 20 pixels)
                     //   - not in select mode, as it would be hard to select text
                     if (t_y < vkb.y && t_y2 < vkb.y &&
-                            Math.abs(t_y - t_y2) < 20 &&
-                            util.settingsValue("ui/dragMode") !== "select") {
+                            Math.abs(t_y - t_y2) < 20) {
                         if (vkb.active) {
                             window.sleepVKB();
-                        } else {
+                        } else if (util.settingsValue("ui/dragMode") !== "select") {
                             window.wakeVKB();
                         }
                     }
@@ -497,7 +497,8 @@ Page {
         height: Theme.iconSizeExtraLarge
         onCheckedChanged: {
             checked = true
-            pageStack.push(Qt.resolvedUrl("SettingsMenu.qml"))
+            pageStack.push(settingsPagePath)
         }
+        z: 100
     }
 }
