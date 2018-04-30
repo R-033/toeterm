@@ -37,10 +37,12 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/toeterm-ru.ts
 TRANSLATIONS += translations/toeterm-nl.ts
 TRANSLATIONS += translations/toeterm-es.ts
+TRANSLATIONS += translations/toeterm-sv.ts
 
 DISTFILES += \
     translations/toeterm-nl.ts \
     translations/toeterm-ru.ts \
     translations/toeterm-es.ts \
+    translations/toeterm-sv.ts \
     rpm/toeterm.yaml \
     rpm/toeterm.spec
