@@ -32,7 +32,7 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/MainPage.qml" line="269"/>
+        <location filename="../qml/MainPage.qml" line="270"/>
         <source>An error occurred</source>
         <translation>Ett fel inträffade</translation>
     </message>
@@ -111,62 +111,67 @@
         <translation>Markera</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="246"/>
+        <location filename="../qml/SettingsMenu.qml" line="247"/>
         <source>Keyboard behavior</source>
         <translation>Tangentbordsbeteende</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="252"/>
+        <location filename="../qml/SettingsMenu.qml" line="253"/>
         <source>Off</source>
         <translation>Av</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="252"/>
+        <location filename="../qml/SettingsMenu.qml" line="253"/>
         <source>Fade</source>
         <translation>Tona</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="252"/>
+        <location filename="../qml/SettingsMenu.qml" line="253"/>
         <source>Move</source>
         <translation>Flytta</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="262"/>
+        <location filename="../qml/SettingsMenu.qml" line="263"/>
         <source>Keyboard delay</source>
         <translation>Tangentbordsfördröjning</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="266"/>
+        <location filename="../qml/SettingsMenu.qml" line="267"/>
         <source>No delay</source>
         <translation>Ingen fördröjning</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="282"/>
+        <location filename="../qml/SettingsMenu.qml" line="283"/>
         <source>Keyboard feedback</source>
         <translation>Tangentbordsåterkoppling</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="288"/>
+        <location filename="../qml/SettingsMenu.qml" line="289"/>
         <source>Charset</source>
         <translation>Teckentabell</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="316"/>
+        <location filename="../qml/SettingsMenu.qml" line="298"/>
+        <source>Custom</source>
+        <translation>Anpassat</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsMenu.qml" line="317"/>
         <source>Apply with Enter key</source>
         <translation>Tillämpa med returtangenten</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="317"/>
+        <location filename="../qml/SettingsMenu.qml" line="318"/>
         <source>Custom charset</source>
         <translation>Anpassad teckentabell</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="332"/>
+        <location filename="../qml/SettingsMenu.qml" line="333"/>
         <source>Transparent background</source>
         <translation>Transparent bakgrund</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="344"/>
+        <location filename="../qml/SettingsMenu.qml" line="345"/>
         <source>Color scheme</source>
         <translation>Färgschema</translation>
     </message>
