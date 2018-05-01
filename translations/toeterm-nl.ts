@@ -153,7 +153,7 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="298"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Aangepast</translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="317"/>
@@ -168,12 +168,12 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="333"/>
         <source>Transparent background</source>
-        <translation type="unfinished"></translation>
+        <translation>Transparante achtergrond</translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="345"/>
         <source>Color scheme</source>
-        <translation type="unfinished"></translation>
+        <translation>Kleurenschema</translation>
     </message>
 </context>
 </TS>
