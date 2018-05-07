@@ -62,6 +62,7 @@ Page {
             id: bgDraw
             anchors.fill: parent
             visible: false
+            z: 0
         }
 
         Timer {
@@ -95,6 +96,18 @@ Page {
             anchors.bottom: parent.bottom
             visible: textrender.showBufferScrollIndicator
             z: 5
+        }
+
+        Rectangle {
+            // bell
+            id: bellBg
+            anchors.fill: parent
+            color: "white"
+            opacity: 0
+            Behavior on opacity {
+                NumberAnimation { duration: 80; easing.type: Easing.InOutQuad }
+            }
+            z: 1
         }
 
         TextRender {
@@ -147,7 +160,7 @@ Page {
             repeat: false
             interval: 80
             onTriggered: {
-                //window.color = window.bgcolor;
+                bellBg.opacity = 0
             }
         }
 
@@ -278,8 +291,8 @@ Page {
 
         function visualBell()
         {
+            bellBg.opacity = 0.1;
             bellTimer.start();
-            //window.color = "#ffffff"
         }
 
         function updateGesturesAllowed()

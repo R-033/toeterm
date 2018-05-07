@@ -32,7 +32,7 @@ Rectangle {
     property bool becomesSticky: false // will this become sticky after release?
     property int stickiness: 0      // current stickiness status
     property bool passiveKey: keyboard.isPassiveKey(code)
-    property real labelOpacity: keyboard.active ? 1.0 : key.passiveKey ? 0.5 : 0.2
+    property real labelOpacity: keyboard.active ? 1.0 : key.passiveKey ? 0.75 : 0.2
 
     // mouse input handling
     property int clickThreshold: 20
@@ -46,7 +46,7 @@ Rectangle {
     Rectangle {
         anchors.fill: parent
         color: label=="" ? "transparent" : keyboard.backgroundColorActive
-        opacity: keyboard.active ? 1.0 : key.passiveKey ? 0.5 : 0
+        opacity: keyboard.active ? 1 : 0
         Behavior on opacity {
             FadeAnimation {}
         }
@@ -71,12 +71,25 @@ Rectangle {
             FadeAnimation {}
         }
         source: {
-            if(key.label.length>1 && key.label.charAt(0)==':')
-                return "qrc:/icons/"+key.label.substring(1)+".png";
+            if(key.label.length>1 && keyboard.iconReference[key.label])
+                return "image://theme/" + keyboard.iconReference[key.label];
             else
                 return "";
         }
-	scale: window.pixelRatio
+        scale: window.pixelRatio * 0.75
+        visible: key.label != ":shift" || stickiness == 1
+    }
+    Image {
+        id: capsImage
+        anchors.centerIn: parent
+        property real lop: key.labelOpacity
+        opacity: lop * (stickiness == 0 ? 0.2 : 1)
+        Behavior on opacity {
+            FadeAnimation {}
+        }
+        source: "image://theme/icon-m-capslock"
+        scale: window.pixelRatio * 0.75
+        visible: key.label == ":shift" && stickiness != 1
     }
 
     Column {
@@ -100,6 +113,10 @@ Rectangle {
             }
 
             font.pointSize: (highlighted ? window.fontSizeLarge : window.fontSizeSmall) * (text.length > 1 ? 0.5 : 1.0)
+
+            Behavior on font.pointSize {
+                NumberAnimation { easing.type: Easing.InOutQuad }
+            }
         }
 
         Text {
@@ -120,6 +137,8 @@ Rectangle {
                 return key.label;
             }
 
+            font.family: Theme.fontFamily
+
             color: keyboard.keyFgColor
 
             opacity: key.labelOpacity * (highlighted ? 1.0 : 0.2)
@@ -129,16 +148,33 @@ Rectangle {
             }
 
             font.pointSize: (highlighted ? window.fontSizeLarge : window.fontSizeSmall) * (text.length > 1 ? 0.5 : 1.0)
+
+            Behavior on font.pointSize {
+                NumberAnimation { easing.type: Easing.InOutQuad }
+            }
         }
+    }
+
+    Text {
+        id: spaceLayoutName
+        color: keyboard.keyFgColor
+        anchors.centerIn: parent
+        text: util.settingsValue("ui/keyboardLayout").toUpperCase().substring(0, 3)
+        font.family: Theme.fontFamily
+        font.pointSize: window.fontSizeLarge * 0.75
+        opacity: key.labelOpacity * 0.5
+        Behavior on opacity {
+            FadeAnimation {}
+        }
+        visible: key.code == 0x20
     }
 
     Rectangle {
         id: stickIndicator
-        visible: sticky && stickiness>0
+        visible: sticky && stickiness>0 && label != ":shift"
         color: keyboard.keyHilightBgColor
         anchors.fill: parent
-        radius: key.radius
-        opacity: 0.5
+        opacity: 0.75
         z: 1
         anchors.topMargin: key.height/2
     }
@@ -236,7 +272,7 @@ Rectangle {
             if (!passKey) window.vkbKeypress(currentCode, keyboard.keyModifiers);
 
             // first non-sticky press will cause the sticky to be released
-            if( !sticky && keyboard.resetSticky != 0 && keyboard.resetSticky !== key ) {
+            if ( !sticky && keyboard.resetSticky != 0 && keyboard.resetSticky !== key ) {
                 keyboard.resetSticky.setStickiness(0);
             }
         }
@@ -275,7 +311,7 @@ Rectangle {
     function setStickiness(val)
     {
         if(sticky) {
-            if( keyboard.resetSticky != 0 && keyboard.resetSticky !== key ) {
+            if( keyboard.resetSticky && keyboard.resetSticky != 0 && keyboard.resetSticky !== key ) {
                 keyboard.resetSticky.setStickiness(0);
             }
 

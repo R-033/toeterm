@@ -264,7 +264,7 @@ Page {
                         width: parent.width
                         value: keyboardFadeOutDelay == 0 ? 10000 : keyboardFadeOutDelay
                         minimumValue: 1000
-                        valueText: value < 10000 ? value + " ms" : qsTr("No delay")
+                        valueText: value < 10000 ? value + " " + qsTr("ms") : qsTr("No delay")
                         stepSize: 250
                         maximumValue: 10000
                         onReleased: {

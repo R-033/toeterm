@@ -114,7 +114,7 @@ void Util::setSettingsValue(QString key, QVariant value)
 
 QString Util::versionString()
 {
-    return "1.4";
+    return "1.5";
 }
 
 int Util::uiFontSize()
@@ -138,11 +138,8 @@ void Util::keyReleaseFeedback()
 
 void Util::bellAlert()
 {
-    //if(!iWindow)
-        return;
-
-    //if( settingsValue("gen/visualBell").toBool() )
-    //    emit visualBell();
+    if( settingsValue("gen/visualBell").toBool() )
+        emit visualBell();
 }
 
 void Util::clearNotifications()

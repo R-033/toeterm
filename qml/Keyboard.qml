@@ -42,6 +42,20 @@ Rectangle {
     property int keysPerRow: keyLoader.vkbColumns()
     property real keywidth: keyboard.width/keysPerRow;
 
+    // icon hack
+    property var iconReference: {
+        ":backspace": "icon-m-backspace",
+        ":down": "icon-m-down",
+        ":enter": "icon-m-enter",
+        ":left": "icon-m-left",
+        ":right": "icon-m-right",
+        ":shift": "icon-m-autocaps",
+        ":tab": "icon-m-transfer",
+        ":up": "icon-m-up",
+        "pgdn": "icon-m-page-down",
+        "pgup": "icon-m-page-up"
+    };
+
     Component {
         id: keyboardContents
         Column {
@@ -118,6 +132,8 @@ Rectangle {
 
     function reloadLayout()
     {
+        resetSticky = 0;
+        keyModifiers = 0;
         var ret = keyLoader.loadLayout(util.settingsValue("ui/keyboardLayout"));
         if (!ret) {
             window.showErrorMessage("There was an error loading the keyboard layout. Using the default one instead.");

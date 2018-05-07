@@ -226,7 +226,7 @@ void defaultSettings(QSettings* settings)
         settings->setValue("ui/dragMode", "scroll");  // "gestures, "scroll", "select" ("off" would also be ok)
 
     if(!settings->contains("state/createdByVersion"))
-        settings->setValue("state/createdByVersion", "1.4");
+        settings->setValue("state/createdByVersion", "1.5");
 
     if(!settings->contains("gestures/panLeftTitle"))
         settings->setValue("gestures/panLeftTitle", "Alt-Right");

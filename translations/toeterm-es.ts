@@ -32,9 +32,9 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/MainPage.qml" line="270"/>
+        <location filename="../qml/MainPage.qml" line="283"/>
         <source>An error occurred</source>
-        <translation>Ocurrió un error</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -139,6 +139,11 @@
         <location filename="../qml/SettingsMenu.qml" line="267"/>
         <source>No delay</source>
         <translation>Sin atraso</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsMenu.qml" line="267"/>
+        <source>ms</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="283"/>

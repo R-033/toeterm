@@ -25,13 +25,11 @@ ApplicationWindow {
     id: appWindow
     focus: true
     Keys.onPressed: {
-        if (window) {
-            term.keyPress(event.key,event.modifiers);
-        }
+        term.keyPress(event.key,event.modifiers);
     }
     property string windowTitle: util.currentWindowTitle()
     property variant lines: []
-    cover: Qt.resolvedUrl("Cover.qml")
+    cover: undefined
     initialPage: Qt.resolvedUrl("MainPage.qml")
     allowedOrientations: Orientation.All
 }
