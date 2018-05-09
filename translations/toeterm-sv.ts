@@ -34,7 +34,7 @@
     <message>
         <location filename="../qml/MainPage.qml" line="283"/>
         <source>An error occurred</source>
-        <translation type="unfinished"></translation>
+        <translation>Ett fel inträffade</translation>
     </message>
 </context>
 <context>
@@ -143,7 +143,7 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="267"/>
         <source>ms</source>
-        <translation type="unfinished"></translation>
+        <translation>ms</translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="283"/>
