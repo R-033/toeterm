@@ -178,7 +178,7 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="348"/>
         <source>Color scheme</source>
-        <translation>Esquema de color</translation>
+        <translation>Color</translation>
     </message>
 </context>
 </TS>
