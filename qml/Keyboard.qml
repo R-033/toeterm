@@ -120,13 +120,15 @@ Rectangle {
         var Key_PageUp = 0x01000016;
         var Key_PageDown = 0x01000017;
         var Key_Return = 0x1000004;
+        var Key_Back = 0x1000003;
         return (key === Key_Left ||
                 key === Key_Up ||
                 key === Key_Right ||
                 key === Key_Down ||
                 key === Key_PageUp ||
                 key === Key_PageDown ||
-                key == Key_Return
+                key === Key_Return ||
+                key === Key_Back
                 );
     }
 

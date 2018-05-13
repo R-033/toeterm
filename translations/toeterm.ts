@@ -6,27 +6,27 @@
     <message>
         <location filename="../qml/AboutPage.qml" line="15"/>
         <source>About</source>
-        <translation>Acerca de</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/AboutPage.qml" line="55"/>
         <source>Terminal size</source>
-        <translation>Tamaño de terminal</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/AboutPage.qml" line="77"/>
         <source>Charset</source>
-        <translation>Carácteres</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/AboutPage.qml" line="95"/>
         <source>Based on ThumbTerm by Olli Vanhoja, which is fork of FingerTerm by Heikki Holstila</source>
-        <translation>Basado en ThumbTerm de Olli Vanhoja, cual es un tenedor de FingerTerm por Heikki Holstila</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/AboutPage.qml" line="107"/>
         <source>Config files for adjusting settings are at:</source>
-        <translation>Los archivos de configuración estan en:</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -42,103 +42,98 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="45"/>
         <source>About</source>
-        <translation>Acerca de</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="49"/>
         <source>New window</source>
-        <translation>Nueva ventana</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="71"/>
         <location filename="../qml/SettingsMenu.qml" line="151"/>
         <source>Copy</source>
-        <translation>Copiar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="81"/>
         <source>Paste</source>
-        <translation>Pegar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="94"/>
         <source>Actions</source>
-        <translation>Acciones</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="132"/>
         <source>URL grabber</source>
-        <translation>Capturador de LUR</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="147"/>
         <source>Open</source>
-        <translation>Abrir</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="171"/>
         <source>Keyboard layout</source>
-        <translation>Diseño del teclado</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="206"/>
         <source>Settings</source>
-        <translation>Ajustes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="213"/>
         <source>Font size</source>
-        <translation>Tamaño de fuente</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="232"/>
         <source>Drag mode</source>
-        <translation>Modo de arrastre</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="238"/>
         <source>Gestures</source>
-        <translation>Gestos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="238"/>
         <source>Scroll</source>
-        <translation>Desplazar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="238"/>
         <source>Select</source>
-        <translation>Seleccionar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="248"/>
         <source>Keyboard behavior</source>
-        <translation>Comportamiento del teclado</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="254"/>
         <source>Off</source>
-        <translation>Apagado</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="254"/>
         <source>Fade</source>
-        <translation>Descolorar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="254"/>
         <source>Move</source>
-        <translation>Mover</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="264"/>
         <source>Keyboard delay</source>
-        <translation>Retraso del teclado</translation>
-    </message>
-    <message>
-        <location filename="../qml/SettingsMenu.qml" line="268"/>
-        <source>No delay</source>
-        <translation>Sin atraso</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="268"/>
@@ -146,39 +141,44 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../qml/SettingsMenu.qml" line="268"/>
+        <source>No delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../qml/SettingsMenu.qml" line="284"/>
         <source>Keyboard feedback</source>
-        <translation>Retroalimentación del teclado</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="290"/>
         <source>Charset</source>
-        <translation>Carácteres</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="299"/>
         <source>Custom</source>
-        <translation>Personalizar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="319"/>
         <source>Apply with Enter key</source>
-        <translation>Aplicar con tecla [Entrar]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="320"/>
         <source>Custom charset</source>
-        <translation>Personalizar carácteres</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="336"/>
         <source>Transparent background</source>
-        <translation>Fondo transparente</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="348"/>
         <source>Color scheme</source>
-        <translation>Esquema de color</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -11,7 +11,7 @@ Page {
     allowedOrientations: Orientation.All
     Item {
         id: layoutWindow
-        property variant layouts: keyLoader.availableLayouts()
+        property variant layouts: keyLoader.allAvailableLayouts()
         property string currentLayout: util.settingsValue("ui/keyboardLayout");
     }
     Item {
@@ -173,21 +173,22 @@ Page {
                 onExpandedChanged: { pageStack.previousPage().settingsLayoutsOpened = expanded; scrollDownTimer.restart(); }
                 Component {
                     id: listDelegate2
-                    ListItem {
+                    TextSwitch {
                         enabled: section3.expanded
-                        highlighted: layoutWindow.currentLayout === modelData
-                        Label {
-                            id: delText
-                            text: modelData.charAt(0).toUpperCase() + modelData.slice(1);
-                            color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
-                            x: Theme.paddingLarge
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                        onClicked: {
-                            layoutWindow.currentLayout = modelData
-                            util.setSettingsValue("ui/keyboardLayout", modelData);
-                            pageStack.previousPage().keyboardItem.reloadLayout();
-                            pageStack.pop();
+                        checked: keyLoader.layoutEnabled(modelData);
+                        text: (modelData.charAt(0).toUpperCase() + modelData.slice(1)).split("_").join(" ");
+                        onCheckedChanged: {
+                            var wasone = keyLoader.availableLayouts().length === 1;
+                            keyLoader.toggleLayout(modelData, checked);
+                            checked = keyLoader.layoutEnabled(modelData);
+                            if (keyLoader.availableLayouts().length === 1) {
+                                var layout = keyLoader.availableLayouts()[0];
+                                layoutWindow.currentLayout = layout;
+                                util.setSettingsValue("ui/keyboardLayout", layout);
+                                pageStack.previousPage().keyboardItem.reloadLayout();
+                            } else if (wasone && keyLoader.availableLayouts().length === 2) {
+                                pageStack.previousPage().keyboardItem.reloadLayout();
+                            }
                         }
                     }
                 }
@@ -214,7 +215,7 @@ Page {
                         value: pageStack.previousPage() ? pageStack.previousPage().textRenderItem.fontPointSize : 11
                         minimumValue: 11
                         valueText: value
-                        stepSize: 4
+                        stepSize: 1
                         maximumValue: util.settingsValue("ui/maxFontSize")
                         onReleased: {
                             pageStack.previousPage().textRenderItem.fontPointSize = sliderValue;
@@ -300,6 +301,7 @@ Page {
                                     charsetField.text = "";
                                     charsetFieldCombo.visible = false;
                                     charsetField.focus = true;
+                                    scrollDownTimer.restart();
                                 }
                             }
                             function menuItemPress(text) {
@@ -327,6 +329,7 @@ Page {
                         enabled: section4.expanded
                     }
                     TextSwitch {
+                        id: transSwitch
                         enabled: section4.expanded
                         checked: !util.settingsValueBool("ui/showBackground")
                         width: parent.width

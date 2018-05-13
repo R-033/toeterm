@@ -44,13 +44,12 @@ Rectangle {
         id: fontHeightHack
         visible: false
         text: "X"
-        font.family: util.settingsValue("ui/fontFamily")
-        font.pointSize: lineView.fontPointSize
+        font: textrender.getFont()
     }
 
     Rectangle {
         x: cursorX
-        y: lineTextCol.y + fontHeightHack.height*(extraLines+1) - cursorHeight
+        y: lineTextCol.y + lineTextCol.height/2 - height/2
         width: cursorWidth
         height: cursorHeight
         color: lineView.fgColor
@@ -68,13 +67,12 @@ Rectangle {
             model: lines
             delegate:
                 Rectangle {
-                height: fontHeightHack.height
+                height: fontHeightHack.height/2
                 width: lineTextCol.width
                 color: "transparent"
                 Text {
                     color: lineView.fgColor
-                    font.family: util.settingsValue("ui/fontFamily")
-                    font.pointSize: lineView.fontPointSize
+                    font: textrender.getFont()
                     text: modelData
                     textFormat: Text.PlainText
                     wrapMode: Text.NoWrap

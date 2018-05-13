@@ -230,6 +230,7 @@ void TextRender::paintFromBuffer(QPainter* painter, QList<QList<TermChar> >& buf
         // background for the current line
         currentX = leftmargin;
         int fragWidth = 0;
+        painter->setPen(Qt::transparent);
         for(int j=0; j<xcount; j++) {
             tmp = buffer[i][j];
             fragWidth += iFontWidth;
@@ -257,6 +258,7 @@ void TextRender::paintFromBuffer(QPainter* painter, QList<QList<TermChar> >& buf
         // text for the current line
         QString line;
         currentX = leftmargin;
+        painter->setBrush(Qt::transparent);
         for (int j=0; j<xcount; j++) {
             tmp = buffer[i][j];
             line += tmp.c;
@@ -296,7 +298,6 @@ void TextRender::drawBgFragment(QPainter* painter, float x, float y, float width
     if (bg == iTerm->defaultBgColor)
         return;
 
-    painter->setPen(Qt::transparent);
     painter->setBrush( iColorTable[bg] );
     painter->drawRect(x, y, width, iFontHeight);
 }
@@ -317,13 +318,12 @@ void TextRender::drawTextFragment(QPainter* painter, float x, float y, QString t
             fg += 8;
         if (fg == 257)
             fg++;
-    } else if(iFont.bold()) {
+    } else if (iFont.bold()) {
         iFont.setBold(false);
         painter->setFont(iFont);
     }
 
     painter->setPen( iColorTable[fg] );
-    painter->setBrush(Qt::transparent);
     painter->drawText(x, y, text);
 }
 
@@ -342,11 +342,19 @@ void TextRender::setTerminal(Terminal *term)
     iFont = QFont(iUtil->settingsValue("ui/fontFamily").toString(),
                   iUtil->settingsValue("ui/fontSize").toInt());
     iFont.setBold(false);
+    iFont.setStyleHint(QFont::Monospace);
+    iFont.setFixedPitch(true);
+    iFont.setKerning(false);
+    iFont.setStyleStrategy(QFont::ForceIntegerMetrics);
     QFontMetrics fontMetrics(iFont);
     iFontHeight = fontMetrics.height();
     iFontWidth = fontMetrics.maxWidth();
     iFontDescent = fontMetrics.descent();
     iFontAscent = fontMetrics.ascent();
+}
+
+QFont TextRender::getFont() {
+    return iFont;
 }
 
 void TextRender::updateTermSize()
@@ -382,7 +390,7 @@ QPoint TextRender::cursorPixelPos()
 
 QPoint TextRender::charsToPixels(QPoint pos)
 {
-    return QPoint(2+((float)pos.x()-1)*iFontWidth, ((float)pos.y()-1)*iFontHeight+iFontDescent+1);
+    return QPoint(2+(pos.x()-1)*iFontWidth, (pos.y()-1)*iFontHeight+iFontDescent+1);
 }
 
 QSize TextRender::cursorPixelSize()

@@ -157,6 +157,30 @@ bool KeyLoader::loadLayoutInternal(QIODevice &from)
     return ret;
 }
 
+void KeyLoader::toggleLayout(QString name, bool enable) {
+    if (enable && !layoutEnabled(name)) {
+        disabledLayouts.removeOne(name);
+        iUtil->setSettingsValue("disabledKeyboardLayouts", iUtil->settingsValue("disabledKeyboardLayouts").toString().replace(name + " ", ""));
+    } else if (!enable) {
+        if (disabledLayouts.length() >= allAvailableLayouts().length() - 1)
+            return;
+        disabledLayouts.append(name);
+        iUtil->setSettingsValue("disabledKeyboardLayouts", iUtil->settingsValue("disabledKeyboardLayouts").toString() + name + " ");
+    }
+}
+
+bool KeyLoader::layoutEnabled(QString name) {
+    return !disabledLayouts.contains(name);
+}
+
+void KeyLoader::loadDisabledLayouts() {
+    disabledLayouts.clear();
+    QStringList layouts = iUtil->settingsValue("disabledKeyboardLayouts").toString().split(" ", QString::SkipEmptyParts);
+    for (int i = 0; i < layouts.length(); i++) {
+        disabledLayouts.append(layouts[i]);
+    }
+}
+
 QVariantList KeyLoader::keyAt(int row, int col)
 {
     QVariantList ret;
@@ -184,20 +208,31 @@ QVariantList KeyLoader::keyAt(int row, int col)
 
 const QStringList KeyLoader::availableLayouts()
 {
-    if (!iUtil)
-        return QStringList();
+    QStringList ret = allAvailableLayouts();
 
+    for (int i = 0; i < disabledLayouts.length(); i++) {
+        if (ret.contains(disabledLayouts[i]))
+            ret.removeOne(disabledLayouts[i]);
+    }
+
+    return ret;
+}
+
+const QStringList KeyLoader::allAvailableLayouts()
+{
+    return allLayouts;
+}
+
+void KeyLoader::getAvailableLayouts() {
     QDir confDir(iUtil->configPath());
     QStringList filter("*.layout");
 
     QStringList results = confDir.entryList(filter, QDir::Files|QDir::Readable, QDir::Name);
 
-    QStringList ret;
+    allLayouts.clear();
     foreach(QString s, results) {
-        ret << s.left(s.lastIndexOf('.'));
+        allLayouts << s.left(s.lastIndexOf('.'));
     }
-
-    return ret;
 }
 
 const QStringList KeyLoader::availableColorSchemes()

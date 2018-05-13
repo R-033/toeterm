@@ -123,6 +123,7 @@ int main(int argc, char *argv[])
     copyFileFromResources(":/data/french.layout", util.configPath()+"/french.layout");
     copyFileFromResources(":/data/german.layout", util.configPath()+"/german.layout");
     copyFileFromResources(":/data/qwertz.layout", util.configPath()+"/qwertz.layout");
+    copyFileFromResources(":/data/english_extra.layout", util.configPath()+"/english_extra.layout");
     copyFileFromResources(":/data/Default.colors", util.configPath()+"/Default.colors");
     copyFileFromResources(":/data/Solarized_Dark.colors", util.configPath()+"/Solarized_Dark.colors");
     copyFileFromResources(":/data/Solarized_Dark_Alternative.colors", util.configPath()+"/Solarized_Dark_Alternative.colors");
@@ -139,6 +140,9 @@ int main(int argc, char *argv[])
         if(!ret)
             qFatal("failure loading keyboard layout");
     }
+
+    keyLoader.getAvailableLayouts();
+    keyLoader.loadDisabledLayouts();
 
     QQmlContext *context = view->rootContext();
     context->setContextProperty( "term", &term );
@@ -202,6 +206,8 @@ void defaultSettings(QSettings* settings)
 
     if(!settings->contains("ui/keyboardLayout"))
         settings->setValue("ui/keyboardLayout", "english");
+    if(!settings->contains("ui/disabledKeyboardLayouts"))
+        settings->setValue("ui/disabledKeyboardLayouts", "");
     if(!settings->contains("ui/fontFamily"))
         settings->setValue("ui/fontFamily", "monospace");
     if(!settings->contains("ui/fontSize"))
@@ -224,9 +230,11 @@ void defaultSettings(QSettings* settings)
         settings->setValue("ui/keyPressFeedback", true);
     if(!settings->contains("ui/dragMode"))
         settings->setValue("ui/dragMode", "scroll");  // "gestures, "scroll", "select" ("off" would also be ok)
+    if(!settings->contains("ui/specialKeys"))
+        settings->setValue("ui/specialKeys", false);
 
     if(!settings->contains("state/createdByVersion"))
-        settings->setValue("state/createdByVersion", "1.5");
+        settings->setValue("state/createdByVersion", "1.6");
 
     if(!settings->contains("gestures/panLeftTitle"))
         settings->setValue("gestures/panLeftTitle", "Alt-Right");

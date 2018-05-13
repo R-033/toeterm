@@ -65,6 +65,7 @@ public:
     void updatePalette();
     Q_INVOKABLE void loadColorScheme(QString layoutName);
     Q_INVOKABLE QString getColor(QString name);
+    Q_INVOKABLE QFont getFont();
 
 signals:
     void myWidthChanged(int newWidth);

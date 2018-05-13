@@ -187,10 +187,8 @@ Page {
             // process the key press normally but don't wake the keyboard (to make
             // it easier to navigate through long documents without having the keyboard
             // constantly pop-up).
-            if (!vkb.isPassiveKey(key))
-            {
+            if (vkb.active || !vkb.isPassiveKey(key))
                 wakeVKB();
-            }
             term.keyPress(key,modifiers);
         }
 
@@ -446,7 +444,7 @@ Page {
                         if (key != null) {
                             if (!spacePressed) {
                                 key.handlePress(multiTouchArea, touchPoint.x, t_y);
-                            } else {
+                            } else if (keyLoader.availableLayouts().length > 1) {
                                  if (Math.abs(spaceXswipe - touchPoint.x) > 50) {
                                     if (!visualKeyFeedbackRect.visible) {
                                         showLayoutSwitcher(multiTouchArea.pressedKeys[touchPoint.pointId]);
@@ -488,10 +486,12 @@ Page {
                 var key = multiTouchArea.pressedKeys[touchPoint.pointId];
                 if (key != null) {
                     if (spacePressed) {
-                        if (spaceXswipe < touchPoint.x - 50) {
-                            vkb.nextLayout();
-                        } else if (spaceXswipe > touchPoint.x + 50) {
-                            vkb.prevLayout();
+                        if (keyLoader.availableLayouts().length > 1) {
+                            if (spaceXswipe < touchPoint.x - 50) {
+                                vkb.nextLayout();
+                            } else if (spaceXswipe > touchPoint.x + 50) {
+                                vkb.prevLayout();
+                            }
                         }
                         key.handleRelease(multiTouchArea, touchPoint.x, t_y, Math.abs(spaceXswipe - touchPoint.x) > 50);
                         spacePressed = false;

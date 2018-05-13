@@ -48,7 +48,14 @@ public:
     Q_INVOKABLE int vkbColumns() { return iVkbColumns; }
     Q_INVOKABLE QVariantList keyAt(int row, int col);
     Q_INVOKABLE const QStringList availableLayouts();
+    Q_INVOKABLE const QStringList allAvailableLayouts();
     Q_INVOKABLE const QStringList availableColorSchemes();
+    void getAvailableLayouts();
+
+    Q_INVOKABLE void toggleLayout(QString name, bool enable);
+    Q_INVOKABLE bool layoutEnabled(QString name);
+
+    void loadDisabledLayouts();
 
 signals:
 
@@ -63,8 +70,11 @@ private:
     int iVkbColumns;
 
     QList<QList<KeyData> > iKeyData;
+    QList<QString> disabledLayouts;
 
     Util *iUtil;
+
+    QStringList allLayouts;
 };
 
 #endif // KEYLOADER_H

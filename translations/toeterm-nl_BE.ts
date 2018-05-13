@@ -32,7 +32,7 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/MainPage.qml" line="283"/>
+        <location filename="../qml/MainPage.qml" line="281"/>
         <source>An error occurred</source>
         <translation type="unfinished"></translation>
     </message>
@@ -81,102 +81,102 @@
         <translation>Toetsenbordindeling</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="205"/>
+        <location filename="../qml/SettingsMenu.qml" line="206"/>
         <source>Settings</source>
         <translation>Instellingen</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="212"/>
+        <location filename="../qml/SettingsMenu.qml" line="213"/>
         <source>Font size</source>
         <translation>Lettergrootte</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="231"/>
+        <location filename="../qml/SettingsMenu.qml" line="232"/>
         <source>Drag mode</source>
         <translation>Versleepmodus</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="237"/>
+        <location filename="../qml/SettingsMenu.qml" line="238"/>
         <source>Gestures</source>
         <translation>Bewegingen</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="237"/>
+        <location filename="../qml/SettingsMenu.qml" line="238"/>
         <source>Scroll</source>
         <translation>Scrollen</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="237"/>
+        <location filename="../qml/SettingsMenu.qml" line="238"/>
         <source>Select</source>
         <translation>Selecteren</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="247"/>
+        <location filename="../qml/SettingsMenu.qml" line="248"/>
         <source>Keyboard behavior</source>
         <translation>Toetsenbordgedrag</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="253"/>
+        <location filename="../qml/SettingsMenu.qml" line="254"/>
         <source>Off</source>
         <translation>Uit</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="253"/>
+        <location filename="../qml/SettingsMenu.qml" line="254"/>
         <source>Fade</source>
         <translation>Vervagen</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="253"/>
+        <location filename="../qml/SettingsMenu.qml" line="254"/>
         <source>Move</source>
         <translation>Verplaatsen</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="263"/>
+        <location filename="../qml/SettingsMenu.qml" line="264"/>
         <source>Keyboard delay</source>
         <translation>Toetsenbordvertraging</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="267"/>
+        <location filename="../qml/SettingsMenu.qml" line="268"/>
         <source>No delay</source>
         <translation>Geen vertraging</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="267"/>
+        <location filename="../qml/SettingsMenu.qml" line="268"/>
         <source>ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="283"/>
+        <location filename="../qml/SettingsMenu.qml" line="284"/>
         <source>Keyboard feedback</source>
         <translation>Toetsenbordterugkoppeling</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="289"/>
+        <location filename="../qml/SettingsMenu.qml" line="290"/>
         <source>Charset</source>
         <translation>Tekenset</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="298"/>
+        <location filename="../qml/SettingsMenu.qml" line="299"/>
         <source>Custom</source>
         <translation>Aangepast</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="317"/>
+        <location filename="../qml/SettingsMenu.qml" line="319"/>
         <source>Apply with Enter key</source>
         <translation>Past toe met Enter</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="318"/>
+        <location filename="../qml/SettingsMenu.qml" line="320"/>
         <source>Custom charset</source>
         <translation>Aangepasten tekenset</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="333"/>
+        <location filename="../qml/SettingsMenu.qml" line="336"/>
         <source>Transparent background</source>
         <translation>Doorzichtigen achtergrond</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsMenu.qml" line="345"/>
+        <location filename="../qml/SettingsMenu.qml" line="348"/>
         <source>Color scheme</source>
         <translation>Kleurenschema</translation>
     </message>

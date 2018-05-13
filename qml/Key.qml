@@ -66,7 +66,7 @@ Rectangle {
     Image {
         id: keyImage
         anchors.centerIn: parent
-        opacity: key.labelOpacity
+        opacity: (key.label_alt == '' || !key.shiftActive) ? key.labelOpacity : 0
         Behavior on opacity {
             FadeAnimation {}
         }
@@ -93,7 +93,7 @@ Rectangle {
     }
 
     Column {
-        visible: keyImage.source == ""
+        visible: keyImage.source == "" || (key.label_alt != '' && key.shiftActive)
         anchors.centerIn: parent
         spacing: -17*window.pixelRatio
 
@@ -106,13 +106,13 @@ Rectangle {
             text: key.label_alt
             color: keyboard.keyFgColor
 
-            opacity: key.labelOpacity * (highlighted ? 1.0 : 0.5)
+            opacity: keyImage.source == "" ? key.labelOpacity * (highlighted ? 1.0 : 0.5) : key.labelOpacity * (key.shiftActive ? 1 : 0)
 
             Behavior on opacity {
                 FadeAnimation {}
             }
 
-            font.pointSize: (highlighted ? window.fontSizeLarge : window.fontSizeSmall) * (text.length > 1 ? 0.5 : 1.0)
+            font.pointSize: ((highlighted || keyImage.source != "") ? window.fontSizeLarge : window.fontSizeSmall) * (text.length > 1 ? 0.5 : 1.0)
 
             Behavior on font.pointSize {
                 NumberAnimation { easing.type: Easing.InOutQuad }
@@ -141,13 +141,13 @@ Rectangle {
 
             color: keyboard.keyFgColor
 
-            opacity: key.labelOpacity * (highlighted ? 1.0 : 0.2)
+            opacity: keyImage.source == "" ? key.labelOpacity * (highlighted ? 1.0 : 0.2) : 0
 
             Behavior on opacity {
                 FadeAnimation {}
             }
 
-            font.pointSize: (highlighted ? window.fontSizeLarge : window.fontSizeSmall) * (text.length > 1 ? 0.5 : 1.0)
+            font.pointSize: ((highlighted && keyImage.source == "") ? window.fontSizeLarge : window.fontSizeSmall) * (text.length > 1 ? 0.5 : 1.0)
 
             Behavior on font.pointSize {
                 NumberAnimation { easing.type: Easing.InOutQuad }
@@ -166,7 +166,7 @@ Rectangle {
         Behavior on opacity {
             FadeAnimation {}
         }
-        visible: key.code == 0x20
+        visible: key.code == 0x20 && keyLoader.availableLayouts().length > 1
     }
 
     Rectangle {

@@ -245,10 +245,10 @@ void Terminal::keyPress(int key, int modifiers)
         toWrite += QString("%1OF").arg(ch_ESC).toLatin1();
     if( key==Qt::Key_Delete )
         toWrite += QString("%1[3~").arg(ch_ESC).toLatin1();
-
-    if( key==Qt::Key_Escape ) {
+    if( key==Qt::Key_Escape )
         toWrite += QString(1,ch_ESC);
-    }
+    if (key >= 0x01000030 && key <= 0x0100003b)
+        toWrite += (QString("%1[").arg(ch_ESC) + QString::number(key-0x1000025) + QString("~")).toLatin1();
 
     if(iPtyIFace)
         iPtyIFace->writeTerm(toWrite);
@@ -263,9 +263,13 @@ void Terminal::insertInBuffer(const QString& chars)
 
     iEmitCursorChangeSignal = false;
 
+    QChar ch;
+    char latin;
+
     for(int i=0; i<chars.size(); i++) {
-        QChar ch = chars.at(i);
-        if(ch.toLatin1()=='\n' || ch.toLatin1()==11 || ch.toLatin1()==12) {  // line feed, vertical tab or form feed
+        ch = chars.at(i);
+        latin = ch.toLatin1();
+        if(latin=='\n' || latin==11 || latin==12) {  // line feed, vertical tab or form feed
             if(cursorPos().y()==iMarginBottom) {
                 scrollFwd(1);
                 if(iNewLineMode)
@@ -279,13 +283,13 @@ void Terminal::insertInBuffer(const QString& chars)
                     setCursorPos(QPoint(cursorPos().x(), cursorPos().y()+1));
             }
         }
-        else if(ch.toLatin1()=='\r') {  // carriage return
+        else if(latin=='\r') {  // carriage return
             setCursorPos(QPoint(1,cursorPos().y()));
         }
-        else if(ch.toLatin1()=='\b' || ch.toLatin1()==127) {  //backspace & del (only move cursor, don't erase)
+        else if(latin=='\b' || latin==127) {  //backspace & del (only move cursor, don't erase)
             setCursorPos(QPoint(cursorPos().x()-1,cursorPos().y()));
         }
-        else if(ch.toLatin1()=='\a') {  // BEL
+        else if(latin=='\a') {  // BEL
             if(escape==']') {  // BEL also ends OSC sequence
                 escape=-1;
                 oscSequence(oscSeq);
@@ -294,7 +298,7 @@ void Terminal::insertInBuffer(const QString& chars)
                 iUtil->bellAlert();
             }
         }
-        else if(ch.toLatin1()=='\t') {  //tab
+        else if(latin=='\t') {  //tab
             if(cursorPos().y() <= iTabStops.size()) {
                 for(int i=0; i<iTabStops[cursorPos().y()-1].count(); i++) {
                     if(iTabStops[cursorPos().y()-1][i] > cursorPos().x()) {
@@ -304,28 +308,28 @@ void Terminal::insertInBuffer(const QString& chars)
                 }
             }
         }
-        else if(ch.toLatin1()==14 || ch.toLatin1()==15) {  //SI and SO, related to character set... ignore
+        else if(latin==14 || latin==15) {  //SI and SO, related to character set... ignore
         }
         else {
             if( escape>=0 ) {
-                if( escape==0 && (ch.toLatin1()=='[') ) {
+                if( escape==0 && (latin=='[') ) {
                     escape='['; //ansi sequence
                     escSeq += ch;
                 }
-                else if( escape==0 && (ch.toLatin1()==']') ) {
+                else if( escape==0 && (latin==']') ) {
                     escape=']'; //osc sequence
                     oscSeq += ch;
                 }
-                else if( escape==0 && multiCharEscapes.contains(ch.toLatin1())) {
-                    escape = ch.toLatin1();
+                else if( escape==0 && multiCharEscapes.contains(latin)) {
+                    escape = latin;
                     escSeq += ch;
                 }
-                else if( escape==0 && ch.toLatin1()=='\\' ) {  // ESC\ also ends OSC sequence
+                else if( escape==0 && latin=='\\' ) {  // ESC\ also ends OSC sequence
                     escape=-1;
                     oscSequence(oscSeq);
                     oscSeq.clear();
                 }
-                else if (ch.toLatin1()==ch_ESC) {
+                else if (latin==ch_ESC) {
                     escape = 0;
                 }
                 else if( escape=='[' || multiCharEscapes.contains(escape) ) {
@@ -338,11 +342,11 @@ void Terminal::insertInBuffer(const QString& chars)
                     escSeq += ch;
                 }
                 else {
-                    escControlChar(QByteArray(1,ch.toLatin1()));
+                    escControlChar(QByteArray(1,latin));
                     escape=-1;
                 }
 
-                if( escape=='[' && ch.toLatin1() >= 64 && ch.toLatin1() <= 126 && ch.toLatin1() != '[' ) {
+                if( escape=='[' && latin >= 64 && latin <= 126 && latin != '[' ) {
                     ansiSequence(escSeq);
                     escape=-1;
                     escSeq.clear();
@@ -355,10 +359,10 @@ void Terminal::insertInBuffer(const QString& chars)
             } else {
                 if (ch.isPrint())
                     insertAtCursor(ch, !iReplaceMode);
-                else if (ch.toLatin1()==ch_ESC)
+                else if (latin==ch_ESC)
                     escape=0;
-                else if (ch.toLatin1() != 0)
-                    qDebug() << "unprintable char" << int(ch.toLatin1());
+                else if (latin != 0)
+                    qDebug() << "unprintable char" << int(latin);
             }
         }
     }
@@ -382,16 +386,18 @@ void Terminal::insertAtCursor(QChar c, bool overwriteMode, bool advanceCursor)
         }
     }
 
-    while(currentLine().size() < cursorPos().x() )
-        currentLine().append(zeroChar);
+    QList<TermChar> &curLine = currentLine();
+
+    while(curLine.size() < cursorPos().x() )
+        curLine.append(zeroChar);
 
     if(!overwriteMode)
-        currentLine().insert(cursorPos().x()-1,zeroChar);
+        curLine.insert(cursorPos().x()-1,zeroChar);
 
-    currentLine()[cursorPos().x()-1].c = c;
-    currentLine()[cursorPos().x()-1].fgColor = iTermAttribs.currentFgColor;
-    currentLine()[cursorPos().x()-1].bgColor = iTermAttribs.currentBgColor;
-    currentLine()[cursorPos().x()-1].attrib = iTermAttribs.currentAttrib;
+    curLine[cursorPos().x()-1].c = c;
+    curLine[cursorPos().x()-1].fgColor = iTermAttribs.currentFgColor;
+    curLine[cursorPos().x()-1].bgColor = iTermAttribs.currentBgColor;
+    curLine[cursorPos().x()-1].attrib = iTermAttribs.currentAttrib;
 
     if (advanceCursor) {
         setCursorPos(QPoint(cursorPos().x()+1,cursorPos().y()));
@@ -401,7 +407,17 @@ void Terminal::insertAtCursor(QChar c, bool overwriteMode, bool advanceCursor)
 void Terminal::deleteAt(QPoint pos)
 {
     clearAt(pos);
-    buffer()[pos.y()-1].removeAt(pos.x()-1);
+    QList<TermChar> &curLine = buffer()[pos.y()-1];
+    for (int i = pos.x(); i < curLine.length(); i++) {
+        curLine[i - 1].c = curLine[i].c;
+        curLine[i - 1].fgColor = curLine[i].fgColor;
+        curLine[i - 1].bgColor = curLine[i].bgColor;
+        curLine[i - 1].attrib = curLine[i].attrib;
+    }
+    curLine[curLine.length() - 1].c = ' ';
+    curLine[curLine.length() - 1].fgColor = iTermAttribs.currentFgColor;
+    curLine[curLine.length() - 1].bgColor = iTermAttribs.currentBgColor;
+    curLine[curLine.length() - 1].attrib = iTermAttribs.currentAttrib;
 }
 
 void Terminal::clearAt(QPoint pos)
@@ -419,28 +435,40 @@ void Terminal::clearAt(QPoint pos)
     while(buffer()[pos.y()-1].size() < pos.x() )
         buffer()[pos.y()-1].append(zeroChar);
 
-    buffer()[pos.y()-1][pos.x()-1] = zeroChar;
+    buffer()[pos.y()-1][pos.x()-1].c = ' ';
+    buffer()[pos.y()-1][pos.x()-1].fgColor = iTermAttribs.currentFgColor;
+    buffer()[pos.y()-1][pos.x()-1].bgColor = iTermAttribs.currentBgColor;
+    buffer()[pos.y()-1][pos.x()-1].attrib = iTermAttribs.currentAttrib;
 }
 
 void Terminal::eraseLineAtCursor(int from, int to)
 {
+    QList<TermChar> &curLine = currentLine();
+
     if(from==-1 && to==-1) {
-        currentLine().clear();
-        return;
+        from = 1;
+        to = iTermSize.width();
     }
+
     if(from < 1)
         from=1;
     from--;
 
-    if(to < 1 || to > currentLine().size())
-        to=currentLine().size();
+    if (to < 1 || to > iTermSize.width())
+        to = iTermSize.width();
     to--;
 
     if(from>to)
         return;
 
+    while(curLine.size() <= to)
+        curLine.append(zeroChar);
+
     for(int i=from; i<=to; i++) {
-        currentLine()[i] = zeroChar;
+        curLine[i].c = ' ';
+        curLine[i].fgColor = iTermAttribs.currentFgColor;
+        curLine[i].bgColor = iTermAttribs.currentBgColor;
+        curLine[i].attrib = iTermAttribs.currentAttrib;
     }
 }
 
@@ -451,7 +479,19 @@ void Terminal::clearAll(bool wholeBuffer)
         backBuffer().clear();
         resetBackBufferScrollPos();
     }
-    buffer().clear();
+    QList<QList<TermChar>> &buf = buffer();
+    for (int i = iMarginTop-1; i < iMarginBottom-1; i++) {
+        while (buf.size() <= i)
+            buf.append(QList<TermChar>());
+        for (int j = 0; j < iTermSize.width(); j++) {
+            while (buf[i].size() <= j)
+                buf[i].append(zeroChar);
+            buf[i][j].c = ' ';
+            buf[i][j].fgColor = iTermAttribs.currentFgColor;
+            buf[i][j].bgColor = iTermAttribs.currentBgColor;
+            buf[i][j].attrib = iTermAttribs.currentAttrib;
+        }
+    }
     setCursorPos(QPoint(1,1));
 }
 
@@ -581,15 +621,34 @@ void Terminal::ansiSequence(const QString& seq)
         }
         if(params.count()>=1 && params.at(0)==1) {
             eraseLineAtCursor(1,cursorPos().x());
-            for(int i=0; i<cursorPos().y()-1; i++) {
-                buffer()[i].clear();
+            QList<QList<TermChar>> &buf = buffer();
+            for (int i = 0; i < cursorPos().y()-1; i++) {
+                for (int j = 0; j < iTermSize.width(); j++) {
+                    if (buf[i].size() <= j)
+                        buf[i].append(zeroChar);
+                    buf[i][j].c = ' ';
+                    buf[i][j].fgColor = iTermAttribs.currentFgColor;
+                    buf[i][j].bgColor = iTermAttribs.currentBgColor;
+                    buf[i][j].attrib = iTermAttribs.currentAttrib;
+                }
             }
         } else if(params.count()>=1 && params.at(0)==2) {
             clearAll();
         } else {
             eraseLineAtCursor(cursorPos().x());
-            for(int i=cursorPos().y(); i<buffer().size(); i++)
-                buffer()[i].clear();
+            QList<QList<TermChar>> &buf = buffer();
+            for (int i = cursorPos().y(); i < iTermSize.height(); i++) {
+                if (buf.size() <= i)
+                    buf.append(QList<TermChar>());
+                for (int j = 0; j < iTermSize.width(); j++) {
+                    if (buf[i].size() <= j)
+                        buf[i].append(zeroChar);
+                    buf[i][j].c = ' ';
+                    buf[i][j].fgColor = iTermAttribs.currentFgColor;
+                    buf[i][j].bgColor = iTermAttribs.currentBgColor;
+                    buf[i][j].attrib = iTermAttribs.currentAttrib;
+                }
+            }
         }
         break;
     case 'K': //erase in line
@@ -601,7 +660,15 @@ void Terminal::ansiSequence(const QString& seq)
             eraseLineAtCursor(1,cursorPos().x());
         }
         else if(params.count()>=1 && params.at(0)==2) {
-            currentLine().clear();
+            QList<TermChar> &line = currentLine();
+            for (int i = 0; i < iTermSize.width(); i++) {
+                if (line.size() <= i)
+                    line.append(zeroChar);
+                line[i].c = ' ';
+                line[i].fgColor = iTermAttribs.currentFgColor;
+                line[i].bgColor = iTermAttribs.currentBgColor;
+                line[i].attrib = iTermAttribs.currentAttrib;
+            }
         } else {
             eraseLineAtCursor(cursorPos().x());
         }
@@ -979,30 +1046,32 @@ void Terminal::escControlChar(const QString& seq)
         }
     }
 
-    if(ch.toLatin1()=='7') { //save cursor
+    char latin = ch.toLatin1();
+
+    if(latin=='7') { //save cursor
         iTermAttribs_saved = iTermAttribs;
     }
-    else if(ch.toLatin1()=='8') { //restore cursor
+    else if(latin=='8') { //restore cursor
         iTermAttribs = iTermAttribs_saved;
     }
-    else if(ch.toLatin1()=='>' || ch.toLatin1()=='=') { //app keypad/normal keypad - ignore these for now...
+    else if(latin=='>' || latin=='=') { //app keypad/normal keypad - ignore these for now...
     }
 
-    else if(ch.toLatin1()=='H') {  // set a tab stop at cursor position
+    else if(latin=='H') {  // set a tab stop at cursor position
         while(iTabStops.size() < cursorPos().y())
             iTabStops.append(QList<int>());
 
         iTabStops[cursorPos().y()-1].append(cursorPos().x());
         qSort(iTabStops[cursorPos().y()-1]);
     }
-    else if(ch.toLatin1()=='D') {  // cursor down/scroll down one line
+    else if(latin=='D') {  // cursor down/scroll down one line
         scrollFwd(1, cursorPos().y());
     }
-    else if(ch.toLatin1()=='M') {  // cursor up/scroll up one line
+    else if(latin=='M') {  // cursor up/scroll up one line
         scrollBack(1, cursorPos().y());
     }
 
-    else if(ch.toLatin1()=='E') {  // new line
+    else if(latin=='E') {  // new line
         if(cursorPos().y()==iMarginBottom) {
             scrollFwd(1);
             setCursorPos(QPoint(1,cursorPos().y()));
@@ -1010,10 +1079,10 @@ void Terminal::escControlChar(const QString& seq)
             setCursorPos(QPoint(1,cursorPos().y()+1));
         }
     }
-    else if(ch.toLatin1()=='c') {  // full reset
+    else if(latin=='c') {  // full reset
         resetTerminal();
     }
-    else if(ch.toLatin1()=='g') {  // visual bell
+    else if(latin=='g') {  // visual bell
         iUtil->bellAlert();
     }
     else {
