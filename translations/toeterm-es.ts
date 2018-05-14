@@ -34,7 +34,7 @@
     <message>
         <location filename="../qml/MainPage.qml" line="281"/>
         <source>An error occurred</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocurrió un error</translation>
     </message>
 </context>
 <context>
@@ -68,7 +68,7 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="132"/>
         <source>URL grabber</source>
-        <translation>Capturador de LUR</translation>
+        <translation>Capturador</translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="147"/>
@@ -78,7 +78,7 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="171"/>
         <source>Keyboard layout</source>
-        <translation>Diseño del teclado</translation>
+        <translation>Teclado</translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="206"/>
@@ -113,7 +113,7 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="248"/>
         <source>Keyboard behavior</source>
-        <translation>Comportamiento del teclado</translation>
+        <translation>Modo de teclado</translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="254"/>
@@ -143,7 +143,7 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="268"/>
         <source>ms</source>
-        <translation type="unfinished"></translation>
+        <translation>ms</translation>
     </message>
     <message>
         <location filename="../qml/SettingsMenu.qml" line="284"/>
@@ -178,7 +178,7 @@
     <message>
         <location filename="../qml/SettingsMenu.qml" line="348"/>
         <source>Color scheme</source>
-        <translation>Esquema de color</translation>
+        <translation>Color</translation>
     </message>
 </context>
 </TS>
